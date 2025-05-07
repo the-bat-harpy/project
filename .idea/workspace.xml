@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0c2465a5-7243-49af-9ad3-fcd721303153" name="Changes" comment="styles-II">
-      <change beforePath="$PROJECT_DIR$/project/frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/project/frontend/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/frontend/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/project/frontend/.gitignore" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
