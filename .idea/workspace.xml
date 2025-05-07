@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0c2465a5-7243-49af-9ad3-fcd721303153" name="Changes" comment="npm a funcionar (não estava no meu antes)">
-      <change afterPath="$PROJECT_DIR$/project/frontend/src/Styles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="0c2465a5-7243-49af-9ad3-fcd721303153" name="Changes" comment="styles-II">
+      <change beforePath="$PROJECT_DIR$/project/frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/project/frontend/src/App.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -127,7 +126,31 @@
       <option name="project" value="LOCAL" />
       <updated>1746611437586</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="styles">
+      <option name="closed" value="true" />
+      <created>1746612361970</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1746612361970</updated>
+    </task>
+    <task id="LOCAL-00009" summary="styles-II">
+      <option name="closed" value="true" />
+      <created>1746613139471</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1746613139471</updated>
+    </task>
+    <task id="LOCAL-00010" summary="styles-II">
+      <option name="closed" value="true" />
+      <created>1746613257351</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1746613257351</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -147,7 +170,9 @@
     <MESSAGE value="superuser" />
     <MESSAGE value="users" />
     <MESSAGE value="npm a funcionar (não estava no meu antes)" />
-    <option name="LAST_COMMIT_MESSAGE" value="npm a funcionar (não estava no meu antes)" />
+    <MESSAGE value="styles" />
+    <MESSAGE value="styles-II" />
+    <option name="LAST_COMMIT_MESSAGE" value="styles-II" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
