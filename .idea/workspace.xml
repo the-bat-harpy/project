@@ -4,7 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0c2465a5-7243-49af-9ad3-fcd721303153" name="Changes" comment="users">
+    <list default="true" id="0c2465a5-7243-49af-9ad3-fcd721303153" name="Changes" comment="npm a funcionar (não estava no meu antes)">
+      <change afterPath="$PROJECT_DIR$/project/frontend/src/Styles.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -118,7 +119,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746609905181</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="npm a funcionar (não estava no meu antes)">
+      <option name="closed" value="true" />
+      <created>1746611437586</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1746611437586</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -137,7 +146,8 @@
     <MESSAGE value="teste" />
     <MESSAGE value="superuser" />
     <MESSAGE value="users" />
-    <option name="LAST_COMMIT_MESSAGE" value="users" />
+    <MESSAGE value="npm a funcionar (não estava no meu antes)" />
+    <option name="LAST_COMMIT_MESSAGE" value="npm a funcionar (não estava no meu antes)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
