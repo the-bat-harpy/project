@@ -15,7 +15,7 @@ function App() {
         <div className="menu-text">Menu</div>
       </div>
 
-      {/* Container de cards */}
+      {}
       <div className="cards-container">
         <div className="card">
           <div className="card-title">Bikinis</div>
