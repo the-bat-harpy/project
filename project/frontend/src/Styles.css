@@ -1,0 +1,145 @@
+.homepage {
+  width: 100%;
+  height: 1417px;
+  background: #fff;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.hero-section {
+  width: 100%;
+  height: 660px;
+  background-image: url("/images/v39_3.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.title {
+  color: #fff;
+  font-family: 'Anuphan', sans-serif;
+  font-size: 96px;
+  text-align: center;
+  position: absolute;
+  top: 207px;
+  width: 100%;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #dcd6ca;
+  border-radius: 23px;
+  padding: 10px 20px;
+  width: fit-content;
+  position: absolute;
+  top: 72px;
+  left: 72px;
+  cursor: pointer;
+}
+
+.search-icon {
+  width: 36px;
+  height: 36px;
+  background-image: url("/images/v39_20.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+
+.search-text {
+  color: #000;
+  font-family: 'Anuphan', sans-serif;
+  font-size: 28px;
+}
+
+.menu-button {
+  background: #dcd6ca;
+  border-radius: 23px;
+  padding: 10px 25px;
+  position: absolute;
+  top: 72px;
+  right: 72px;
+  cursor: pointer;
+}
+
+.menu-text {
+  color: #000;
+  font-family: 'Anuphan', sans-serif;
+  font-size: 28px;
+}
+
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  justify-content: center;
+  position: absolute;
+  top: 770px;
+  left: 0;
+  width: 100%;
+  padding: 0 40px;
+}
+
+.card {
+  width: 268px;
+  height: 290px;
+  background: #dcd6ca;
+  border-radius: 9px;
+  position: relative;
+}
+
+.card-title {
+  width: 100%;
+  text-align: center;
+  color: #000;
+  font-family: 'Anuphan', sans-serif;
+  font-size: 24px;
+  position: absolute;
+  top: 24px;
+  left: 0;
+}
+
+.card-image {
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  position: absolute;
+  border-radius: 46px;
+}
+
+.bikinis-image {
+  width: 139px;
+  height: 169px;
+  background-image: url("/images/v39_30.png");
+  top: 95px;
+  left: 65px;
+}
+
+.sandals-image {
+  width: 232px;
+  height: 195px;
+  background-image: url("/images/v78_163.png");
+  top: 95px;
+  left: 18px;
+}
+
+.sunglasses-image {
+  width: 213px;
+  height: 128px;
+  background-image: url("/images/v78_166.png");
+  top: 100px;
+  left: 28px;
+}
+
+.towels-image {
+  width: 201px;
+  height: 311px;
+  background-image: url("/images/v78_169.png");
+  top: 0;
+  left: 34px;
+}
