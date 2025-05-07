@@ -36,7 +36,9 @@ function App() {
           <div className="card-title">Toalhas</div>
           <div className="card-image towels-image"></div>
         </div>
+
       </div>
+
     </div>
   );
 }
