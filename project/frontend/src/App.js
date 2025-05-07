@@ -15,25 +15,27 @@ function App() {
         <div className="menu-text">Menu</div>
       </div>
 
-      {/* Cards */}
-      <div className="card card1">
-        <div className="card-title">Bikinis</div>
-        <div className="card-image bikinis-image"></div>
-      </div>
+      {/* Container de cards */}
+      <div className="cards-container">
+        <div className="card">
+          <div className="card-title">Bikinis</div>
+          <div className="card-image bikinis-image"></div>
+        </div>
 
-      <div className="card card2">
-        <div className="card-title">Sandálias</div>
-        <div className="card-image sandals-image"></div>
-      </div>
+        <div className="card">
+          <div className="card-title">Sandálias</div>
+          <div className="card-image sandals-image"></div>
+        </div>
 
-      <div className="card card3">
-        <div className="card-title">Óculos de Sol</div>
-        <div className="card-image sunglasses-image"></div>
-      </div>
+        <div className="card">
+          <div className="card-title">Óculos de Sol</div>
+          <div className="card-image sunglasses-image"></div>
+        </div>
 
-      <div className="card card4">
-        <div className="card-title">Toalhas</div>
-        <div className="card-image towels-image"></div>
+        <div className="card">
+          <div className="card-title">Toalhas</div>
+          <div className="card-image towels-image"></div>
+        </div>
       </div>
     </div>
   );
