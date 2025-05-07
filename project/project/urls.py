@@ -20,4 +20,7 @@ from django.urls import path
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("api/signup/", view.signup),
+    path("api/login/", view.login_view),
+    path("api/logout/", view.logout_view),
+    path("api/user/", view.user_view)
 ]
