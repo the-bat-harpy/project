@@ -30,12 +30,12 @@ def login_view(request):
     else:
         return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
-    @api_view(['GET'])
-    def logout_view(request):
-        logout(request)
-        return Response({'message': 'Logged out successfully'})
+@api_view(['GET'])
+def logout_view(request):
+    logout(request)
+    return Response({'message': 'Logged out successfully'})
 
-    @api_view(['GET'])
-    @permission_classes([IsAuthenticated])
-    def user_view(request):
-        return Response({'username': request.user.username})
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def user_view(request):
+    return Response({'username': request.user.username})
