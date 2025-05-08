@@ -1,88 +1,145 @@
+@import url('https://fonts.googleapis.com/css2?family=Anuphan:wght@400;700;900&family=Bowlby+One&display=swap');
+
 .homepage {
   width: 100%;
   height: 1417px;
-  background: #fff;
+  background: transparent;
   position: relative;
   overflow-x: hidden;
+  z-index: 1;
 }
 
+/* HERO SECTION */
 .hero-section {
   width: 100%;
-  height: 660px;
-  background-image: url("/images/v39_3.png");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-video {
   position: absolute;
   top: 0;
   left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
 }
 
 .title {
   color: #fff;
-  font-family: 'Anuphan', sans-serif;
-  font-size: 96px;
+  font-family: 'Bowlby One';
+  font-size: 85px;
   text-align: center;
   position: absolute;
-  top: 207px;
+  top: 30px;
   width: 100%;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  border: 5px;
+  z-index: 2;
 }
 
-.search-bar {
+/* SEARCH BUTTON */
+.search-toggle {
+  position: absolute;
+  top: 40px;
+  right: 180px;
+  background: transparent;
+  border: 2px solid white;
+  border-radius: 23px;
+  padding: 10px 25px;
   display: flex;
   align-items: center;
-  gap: 14px;
-  background: #dcd6ca;
-  border-radius: 23px;
-  padding: 10px 20px;
-  width: fit-content;
-  position: absolute;
-  top: 72px;
-  left: 72px;
+  gap: 10px;
+  transition: width 0.3s ease, padding 0.3s ease;
   cursor: pointer;
+  overflow: hidden;
 }
 
-.search-icon {
-  width: 36px;
-  height: 36px;
-  background-image: url("/images/v39_20.png");
+.search-toggle input {
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #000;
+  font-family: 'Anuphan', sans-serif;
+  font-size: 16px;
+  width: 0;
+  opacity: 0;
+  transition: width 0.3s ease, opacity 0.3s ease;
+}
+
+.search-icon-img {
+  width: 20px;
+  height: 20px;
+  background-image: url('./images/search.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.search-label {
+  font-family: 'Anuphan';
+  color: #fff;
+  white-space: nowrap;
+}
+
+.search-toggle.expanded input {
+  width: 160px;
+  opacity: 1;
+}
+
+/* MENU BUTTON */
+.menu-button {
+  background: transparent;
+  opacity: 1;
+  border: 2px solid rgba(255,255,255,1);
+  border-radius: 23px;
+  padding: 10px 25px;
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-text {
+    color: #fff;
+    font-family: 'Anuphan';
+}
+
+.menu-button:hover {
+  background: #dcd6ca;
+  opacity: 0.85;
+}
+
+.menu-icon {
+  width: 24px;
+  height: 24px;
+  background-image: url("./images/praia.png");
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
 }
 
-.search-text {
-  color: #000;
-  font-family: 'Anuphan', sans-serif;
-  font-size: 28px;
-}
 
-.menu-button {
-  background: #dcd6ca;
-  border-radius: 23px;
-  padding: 10px 25px;
-  position: absolute;
-  top: 72px;
-  right: 72px;
-  cursor: pointer;
-}
 
-.menu-text {
-  color: #000;
-  font-family: 'Anuphan', sans-serif;
-  font-size: 28px;
-}
-
+/* CARDS */
 .cards-container {
   display: flex;
-  flex-wrap: wrap;
-  gap: 40px;
   justify-content: center;
-  position: absolute;
-  top: 770px;
-  left: 0;
-  width: 100%;
-  padding: 0 40px;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  padding: 4rem 2rem 2rem;
+  background: white;
+  border-top-left-radius: 2rem;
+  border-top-right-radius: 2rem;
+  margin-top: -40px;
+  z-index: 2;
+  position: relative;
+  box-shadow: 0 -8px 20px rgba(0, 0, 0, 0.1);
 }
 
 .card {
@@ -91,6 +148,10 @@
   background: #dcd6ca;
   border-radius: 9px;
   position: relative;
+  transform: translateY(50px);
+  opacity: 0;
+  transition: all 0.6s ease-out;
+  cursor: pointer;
 }
 
 .card-title {
@@ -112,10 +173,16 @@
   border-radius: 46px;
 }
 
+.card.visible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* CARD IMAGES */
 .bikinis-image {
   width: 139px;
   height: 169px;
-  background-image: url("/images/v39_30.png");
+  background-image: url("./images/bikini.png");
   top: 95px;
   left: 65px;
 }
@@ -123,7 +190,7 @@
 .sandals-image {
   width: 232px;
   height: 195px;
-  background-image: url("/images/v78_163.png");
+  background-image: url("./images/sapatos.png");
   top: 95px;
   left: 18px;
 }
@@ -131,7 +198,7 @@
 .sunglasses-image {
   width: 213px;
   height: 128px;
-  background-image: url("/images/v78_166.png");
+  background-image: url("./images/oculos.png");
   top: 100px;
   left: 28px;
 }
@@ -139,7 +206,220 @@
 .towels-image {
   width: 201px;
   height: 311px;
-  background-image: url("/images/v78_169.png");
-  top: 0;
-  left: 34px;
+  background-image: url("./images/toalha.png");
+  top: -10px;
+  left: 34px;
 }
+
+/* SIDEBAR */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -300px;
+  width: 260px;
+  height: 100vh;
+  background-color: #fff;
+  box-shadow: 2px 0 12px rgba(0, 0, 0, 0.2);
+  padding: 40px 20px;
+  transition: left 0.3s ease;
+  z-index: 1000;
+  border-top-right-radius: 32px;
+  border-bottom-right-radius: 32px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar li {
+  margin: 20px 0;
+  font-family: 'Anuphan', sans-serif;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+/* OVERLAY */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  visibility: hidden;
+  z-index: 900;
+  transition: opacity 0.3s ease;
+}
+
+.sidebar.active {
+  left: 0;
+}
+
+.overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* PROFILE SIDEBAR */
+.sidebar-profile {
+  position: fixed;
+  top: 0;
+  right: -300px;
+  width: 260px;
+  height: 100vh;
+  background-color: #fff;
+  box-shadow: -2px 0 12px rgba(0, 0, 0, 0.2);
+  padding: 40px 20px;
+  transition: right 0.3s ease;
+  z-index: 1000;
+  border-top-left-radius: 32px;
+  border-bottom-left-radius: 32px;
+}
+
+.sidebar-profile.active {
+  right: 0;
+}
+
+.sidebar-title {
+  font-family: 'Anuphan';
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #000;
+  text-align: center;
+}
+
+.sidebar-subtitle {
+  font-family: 'Anuphan', sans-serif;
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.sidebar-input {
+  width: 100%;
+  padding: 10px 15px;
+  margin-bottom: 15px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-family: 'Anuphan', sans-serif;
+}
+
+.sidebar-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #67AC93;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 16px;
+  font-family: 'Anuphan', sans-serif;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.sidebar-button:hover {
+  background-color: #569b84;
+}
+/* PROFILE BUTTON */
+.profile-button {
+  background: #ffffffcc; /* branco com opacidade */
+  border: 2px solid white;
+  border-radius: 50%;
+  padding: 10px;
+  position: absolute;
+  top: 30px;
+  right: 95px; /* Ajuste a posição conforme necessário */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  transition: background 0.3s ease;
+}
+
+.profile-button:hover {
+  background: #ffffffee;
+}
+
+.profile-icon-img {
+  width: 50px;
+  height: 50px;
+  background-image: url('./images/user.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* CESTO BUTTON */
+.cesto-button {
+  background: #ffffffcc; /* branco com opacidade */
+  border: 2px solid white;
+  border-radius: 50%;
+  padding: 10px;
+  position: absolute;
+  top: 30px;
+  right: 5px; /* Ajuste a posição conforme necessário */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  transition: background 0.3s ease;
+}
+
+.cesto-button:hover {
+  background: #ffffffee;
+}
+
+.cesto-icon-img {
+  width: 50px;
+  height: 50px;
+  background-image: url('./images/cesto.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.authenticated-links {
+  margin-top: auto; /* Faz com que os botões fiquem na parte inferior */
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.authenticated-links button {
+  margin: 10px 0;
+  padding: 10px;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.authenticated-links button:hover {
+  background-color: #444;
+}
+
+.logout-button {
+  background-color: #000;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.logout-button:hover {
+  background-color: #444;
+}
+
+
+

@@ -5,8 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0c2465a5-7243-49af-9ad3-fcd721303153" name="Changes" comment="user">
-      <change beforePath="$PROJECT_DIR$/project/frontend/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/project/frontend/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/frontend/src/images/oculos.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/frontend/src/images/search.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/frontend/src/images/toalha.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/frontend/src/images/user.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/frontend/public/images/bikini.png" beforeDir="false" afterPath="$PROJECT_DIR$/project/frontend/src/images/bikini.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/frontend/public/images/oculos.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/frontend/public/images/praia.png" beforeDir="false" afterPath="$PROJECT_DIR$/project/frontend/src/images/praia.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/frontend/public/images/sapatos.png" beforeDir="false" afterPath="$PROJECT_DIR$/project/frontend/src/images/sapatos.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/frontend/public/images/toalha.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/project/frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/project/frontend/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/frontend/src/Styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/project/frontend/src/Styles.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,9 +62,20 @@
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "Merging main"
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/Users/carolinaavelas/PycharmProjects/project/project/frontend/src/images"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/project/frontend/src/images" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/project/frontend/src/images" />
+      <recent name="$PROJECT_DIR$/project/frontend/public/images" />
+      <recent name="$PROJECT_DIR$/project/frontend/src" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
