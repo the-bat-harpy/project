@@ -1,35 +1,46 @@
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
+from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 
 
 @api_view(['POST'])
 def signup(request):
-
-    username = request.data.get('username')
+    email = request.data.get('email')
     password = request.data.get('password')
 
-    if username is None or password is None:
-        return Response({'error': 'invalid username/password'}, status=status.HTTP_400_BAD_REQUEST)
-    if User.objects.filter(username=username).exists():
-        return Response({'error': 'Username already exists'}, status=status.HTTP_400_BAD_REQUEST)
-    user = User.objects.create_user(username=username, password=password)
-    return Response({'message': 'User ' + user.username + ' created successfully'}, status=status.HTTP_201_CREATED)
+    if not email or not password:
+        return Response({'error': 'Email e senha são obrigatórios'}, status=status.HTTP_400_BAD_REQUEST)
+
+    if User.objects.filter(username=email).exists():
+        return Response({'error': 'O email já está registrado'}, status=status.HTTP_400_BAD_REQUEST)
+
+    user = User.objects.create_user(username=email, email=email, password=password)
+
+    return Response({'message': f'Usuário {user.username} criado com sucesso'}, status=status.HTTP_201_CREATED)
+
 
 @api_view(['POST'])
 def login_view(request):
-
-    username = request.data.get('username')
+    email = request.data.get('username')
     password = request.data.get('password')
-    user = authenticate(request, username=username, password=password)
+
+    if email is None or password is None:
+        return Response({'error': 'Email and password are required'}, status=status.HTTP_400_BAD_REQUEST)
+
+    try:
+        user = User.objects.get(email=email)
+        user = authenticate(request, username=user.username, password=password)
+    except User.DoesNotExist:
+        return Response({'error': 'Invalid email or password'}, status=status.HTTP_401_UNAUTHORIZED)
 
     if user is not None:
         login(request, user)
         return Response({'message': 'Logged in successfully'})
     else:
-        return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
-
+        return Response({'error': 'Invalid email or password'}, status=status.HTTP_401_UNAUTHORIZED)
 @api_view(['GET'])
 def logout_view(request):
     logout(request)

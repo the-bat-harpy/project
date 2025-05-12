@@ -4,19 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0c2465a5-7243-49af-9ad3-fcd721303153" name="Changes" comment="user">
-      <change afterPath="$PROJECT_DIR$/project/frontend/src/images/oculos.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/frontend/src/images/search.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/frontend/src/images/toalha.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/frontend/src/images/user.png" afterDir="false" />
+    <list default="true" id="0c2465a5-7243-49af-9ad3-fcd721303153" name="Changes" comment="ficheiros">
+      <change afterPath="$PROJECT_DIR$/project/frontend/src/images/dados.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/frontend/src/images/encomendas.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/frontend/public/images/bikini.png" beforeDir="false" afterPath="$PROJECT_DIR$/project/frontend/src/images/bikini.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/frontend/public/images/oculos.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/frontend/public/images/praia.png" beforeDir="false" afterPath="$PROJECT_DIR$/project/frontend/src/images/praia.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/frontend/public/images/sapatos.png" beforeDir="false" afterPath="$PROJECT_DIR$/project/frontend/src/images/sapatos.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/frontend/public/images/toalha.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/project/db.sqlite3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/project/frontend/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/frontend/src/Auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/project/frontend/src/Auth.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/frontend/src/Styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/project/frontend/src/Styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/project/view.py" beforeDir="false" afterPath="$PROJECT_DIR$/project/project/view.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,14 +54,14 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "/Users/carolinaavelas/PycharmProjects/project/project/frontend/src/images"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/carolinaavelas/PycharmProjects/project/project/frontend/src/images&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/project/frontend/src/images" />
@@ -180,7 +176,23 @@
       <option name="project" value="LOCAL" />
       <updated>1746613764469</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="styles-II">
+      <option name="closed" value="true" />
+      <created>1746725030102</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1746725030102</updated>
+    </task>
+    <task id="LOCAL-00013" summary="ficheiros">
+      <option name="closed" value="true" />
+      <created>1746725052960</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1746725052960</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -201,9 +213,10 @@
     <MESSAGE value="users" />
     <MESSAGE value="npm a funcionar (não estava no meu antes)" />
     <MESSAGE value="styles" />
-    <MESSAGE value="styles-II" />
     <MESSAGE value="user" />
-    <option name="LAST_COMMIT_MESSAGE" value="user" />
+    <MESSAGE value="styles-II" />
+    <MESSAGE value="ficheiros" />
+    <option name="LAST_COMMIT_MESSAGE" value="ficheiros" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
