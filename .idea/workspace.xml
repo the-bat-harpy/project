@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0c2465a5-7243-49af-9ad3-fcd721303153" name="Changes" comment="homepage, login, cestos, wishlists...">
+    <list default="true" id="0c2465a5-7243-49af-9ad3-fcd721303153" name="Changes" comment="em componentes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/project/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/project/frontend/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/project/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/project/project/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/frontend/src/ProfileSB.js" beforeDir="false" afterPath="$PROJECT_DIR$/project/frontend/src/ProfileSB.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -196,7 +194,15 @@
       <option name="project" value="LOCAL" />
       <updated>1747030242109</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="em componentes">
+      <option name="closed" value="true" />
+      <created>1747133314923</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1747133314923</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -221,7 +227,8 @@
     <MESSAGE value="styles-II" />
     <MESSAGE value="ficheiros" />
     <MESSAGE value="homepage, login, cestos, wishlists..." />
-    <option name="LAST_COMMIT_MESSAGE" value="homepage, login, cestos, wishlists..." />
+    <MESSAGE value="em componentes" />
+    <option name="LAST_COMMIT_MESSAGE" value="em componentes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

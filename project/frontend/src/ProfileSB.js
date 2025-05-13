@@ -55,7 +55,7 @@ function ProfileSidebar({ logout, isAuthenticated, setIsAuthenticated }) {
         <div class="sidebar-logged-in">
           <h2 class="sidebar-title">Olá, ${greetingName}</h2>
           <div class="sidebar-actions">
-            <button class="sidebar-nav-button" id="gotoPage1">Dados Pessoais</button>
+            <button class="sidebar-nav-button" id="profile">Dados Pessoais</button>
             <button class="sidebar-nav-button" id="gotoPage2">Minhas Encomendas</button>
             <button class="sidebar-button logout-button">Terminar Sessão</button>
           </div>
@@ -63,7 +63,7 @@ function ProfileSidebar({ logout, isAuthenticated, setIsAuthenticated }) {
       `;
 
       sidebarProfile.querySelector('.logout-button')?.addEventListener('click', logout);
-      document.getElementById('gotoPage1')?.addEventListener('click', () => (window.location.href = '/pagina1'));
+      document.getElementById('profile')?.addEventListener('click', () => (window.location.href = '/Profile'));
       document.getElementById('gotoPage2')?.addEventListener('click', () => (window.location.href = '/pagina2'));
     }
 
