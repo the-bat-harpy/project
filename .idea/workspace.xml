@@ -4,15 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0c2465a5-7243-49af-9ad3-fcd721303153" name="Changes" comment="ficheiros">
-      <change afterPath="$PROJECT_DIR$/project/frontend/src/images/dados.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/frontend/src/images/encomendas.png" afterDir="false" />
+    <list default="true" id="0c2465a5-7243-49af-9ad3-fcd721303153" name="Changes" comment="homepage, login, cestos, wishlists...">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/project/db.sqlite3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/project/frontend/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/frontend/src/Auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/project/frontend/src/Auth.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/frontend/src/Styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/project/frontend/src/Styles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/project/view.py" beforeDir="false" afterPath="$PROJECT_DIR$/project/project/view.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/project/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/project/project/settings.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -192,7 +188,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746725052960</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="homepage, login, cestos, wishlists...">
+      <option name="closed" value="true" />
+      <created>1747030242109</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1747030242109</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -216,7 +220,8 @@
     <MESSAGE value="user" />
     <MESSAGE value="styles-II" />
     <MESSAGE value="ficheiros" />
-    <option name="LAST_COMMIT_MESSAGE" value="ficheiros" />
+    <MESSAGE value="homepage, login, cestos, wishlists..." />
+    <option name="LAST_COMMIT_MESSAGE" value="homepage, login, cestos, wishlists..." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
