@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 import './Styles.css';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
+const BASE_URL = 'http://localhost:8000/api';
 
 const CestoWishlist = () => {
   const [isSidebarActive, setIsSidebarActive] = useState(false);
@@ -19,35 +22,41 @@ const CestoWishlist = () => {
 
   const fetchCestoProdutos = async () => {
     try {
-      const response = await fetch('/api/cesto/', {
-        credentials: 'include',
+      const response = await axios.get(`${BASE_URL}/cesto/`, {
+        withCredentials: true,
       });
-      if (!response.ok) throw new Error('Erro ao carregar o cesto');
-      const data = await response.json();
-      setCestoProdutos(data);
+      setCestoProdutos(response.data);
     } catch (error) {
-      console.error('Erro:', error);
+      console.error('Erro ao carregar o cesto:', error);
     }
   };
 
   const fetchWishlistProdutos = async () => {
     try {
-      const response = await fetch('/api/wishlist/', {
-        credentials: 'include',
+      const response = await axios.get(`${BASE_URL}/wishlist/`, {
+        withCredentials: true,
       });
-      if (!response.ok) throw new Error('Erro ao carregar a wishlist');
-      const data = await response.json();
-      setWishlistProdutos(data);
+      setWishlistProdutos(response.data);
     } catch (error) {
-      console.error('Erro:', error);
+      console.error('Erro ao carregar a wishlist:', error);
     }
   };
 
-  const calcularTotal = () => {
-    return cestoProdutos
+  const removerDoCesto = async (produtoId) => {
+    try {
+      await axios.delete(`${BASE_URL}/cesto/${produtoId}/`, {
+        withCredentials: true,
+      });
+      fetchCestoProdutos();
+    } catch (error) {
+      console.error('Erro ao remover do cesto:', error);
+    }
+  };
+
+  const calcularTotal = () =>
+    cestoProdutos
       .reduce((acc, produto) => acc + parseFloat(produto.preco) * produto.quantidade, 0)
       .toFixed(2);
-  };
 
   const cestoContent = (
     <div className="sidebar-cesto-body">
@@ -60,11 +69,18 @@ const CestoWishlist = () => {
           {cestoProdutos.map((produto) => (
             <div key={produto.id} className="cesto-item">
               <img src={produto.imagens.frontImg_url} alt={produto.nome} />
-              <div>
+              <div className="cesto-item-info">
                 <p>{produto.nome}</p>
                 <p>{produto.preco} €</p>
                 <p>{produto.quantidade} un. | {produto.tamanho} | {produto.cor}</p>
               </div>
+              <button
+                className="remove-produto-btn"
+                onClick={() => removerDoCesto(produto.id)}
+                aria-label="Remover do cesto"
+              >
+                🗑️
+              </button>
             </div>
           ))}
           <div className="cesto-total">

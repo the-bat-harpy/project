@@ -67,5 +67,6 @@ class Encomenda(models.Model):
     estado = models.ForeignKey(Estado, on_delete=models.CASCADE)
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     produtos = models.ManyToManyField(Produto)
+    cartao_numero = models.CharField(max_length=16, null=True, blank=True)
 
 # Create your models here.

@@ -36,6 +36,12 @@ urlpatterns = [
     path('api/cesto/adicionar/', views.adicionar_ao_cesto),
     path('api/csrf-cookie/', view.csrf_token),
     path('api/update-profile/', views.update_profile_view),
+    path('api/encomendas/', views.encomendas_view),
+    path('api/finalizar-compra/', views.finalizar_compra_view),
+    path('api/encomendas/<int:encomenda_id>/editar/', views.editar_encomenda_view),
+    path('api/produtos/pesquisar', views.pesquisar_produtos),
+    path('api/tipos/', views.listar_tipos),
+    path('api/produtos/', views.adicionar_produto),
 
 ]
 

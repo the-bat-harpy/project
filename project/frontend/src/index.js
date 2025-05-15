@@ -13,6 +13,8 @@ import ProdutosPage from './Produtos.js'
 import FinalizarCompra from './FinalizarCompra.js'
 import BikinisDetails from './BikinisDetails';
 import Encomendas from './Encomendas'
+import ResultadosPesquisa from './ResultadosPesquisa'
+import AdicionarProduto from './AdicionarProduto'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -29,6 +31,8 @@ root.render(
           <Route path="/finalizar-compra" element={<FinalizarCompra />} />
           <Route path="/details/:id" element={<BikinisDetails />} />
           <Route path="/encomendas" element= {<Encomendas/>}/>
+          <Route path="/pesquisa" element={<ResultadosPesquisa/>}/>
+          <Route path="/adicionar" element={<AdicionarProduto/>}/>
         </Routes>
       </BrowserRouter>
     </AuthProvider>

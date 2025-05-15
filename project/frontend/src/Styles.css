@@ -596,3 +596,35 @@
   opacity: 1;
   visibility: visible;
 }
+.remove-produto-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  margin-left: auto;
+  color: #cc0000;
+  transition: transform 0.2s ease;
+}
+
+.remove-produto-btn:hover {
+  transform: scale(1.2);
+}
+
+.cesto-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.cesto-item img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.cesto-item-info {
+  flex-grow: 1;
+}

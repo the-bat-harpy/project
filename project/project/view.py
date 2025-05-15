@@ -58,3 +58,5 @@ def user_view(request):
 def csrf_token(request):
     return JsonResponse({'detail': 'CSRF cookie set'})
 
+
+
