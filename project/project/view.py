@@ -1,9 +1,11 @@
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
+from django.http import JsonResponse
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from django.views.decorators.csrf import ensure_csrf_cookie
 
 
 @api_view(['POST'])
@@ -50,3 +52,9 @@ def logout_view(request):
 @permission_classes([IsAuthenticated])
 def user_view(request):
     return Response({'username': request.user.username})
+
+
+@ensure_csrf_cookie
+def csrf_token(request):
+    return JsonResponse({'detail': 'CSRF cookie set'})
+

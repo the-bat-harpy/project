@@ -29,7 +29,13 @@ urlpatterns = [
     path("api/logout/", view.logout_view),
     path("api/user/", view.user_view),
     path('api/produtos/<int:tipo_id>/', views.get_products_by_tipo),
-    path('api/tipo-descricao/<int:tipo_id>/', views.tipo_produto_descricao, name='tipo_produto_descricao'),
+    path('api/tipo-descricao/<int:tipo_id>/', views.tipo_produto_descricao),
+    path('api/cesto/', views.produtos_no_cesto),
+    path('api/wishlist/',views.wishlist_view),
+    path('api/produto/<int:produto_id>/', views.produto_detalhes_view),
+    path('api/cesto/adicionar/', views.adicionar_ao_cesto),
+    path('api/csrf-cookie/', view.csrf_token),
+    path('api/update-profile/', views.update_profile_view),
 
 ]
 

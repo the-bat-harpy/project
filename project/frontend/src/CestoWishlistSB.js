@@ -1,53 +1,106 @@
 import { useState, useEffect } from 'react';
 import './Styles.css';
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 
 const CestoWishlist = () => {
   const [isSidebarActive, setIsSidebarActive] = useState(false);
   const [activeTab, setActiveTab] = useState('cesto');
-  const navigate= useNavigate()
+  const [cestoProdutos, setCestoProdutos] = useState([]);
+  const [wishlistProdutos, setWishlistProdutos] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (activeTab === 'cesto') {
+      fetchCestoProdutos();
+    } else {
+      fetchWishlistProdutos();
+    }
+  }, [activeTab]);
+
+  const fetchCestoProdutos = async () => {
+    try {
+      const response = await fetch('/api/cesto/', {
+        credentials: 'include',
+      });
+      if (!response.ok) throw new Error('Erro ao carregar o cesto');
+      const data = await response.json();
+      setCestoProdutos(data);
+    } catch (error) {
+      console.error('Erro:', error);
+    }
+  };
+
+  const fetchWishlistProdutos = async () => {
+    try {
+      const response = await fetch('/api/wishlist/', {
+        credentials: 'include',
+      });
+      if (!response.ok) throw new Error('Erro ao carregar a wishlist');
+      const data = await response.json();
+      setWishlistProdutos(data);
+    } catch (error) {
+      console.error('Erro:', error);
+    }
+  };
+
+  const calcularTotal = () => {
+    return cestoProdutos
+      .reduce((acc, produto) => acc + parseFloat(produto.preco) * produto.quantidade, 0)
+      .toFixed(2);
+  };
 
   const cestoContent = (
     <div className="sidebar-cesto-body">
-      <div className="cesto-item">
-        <img src="./images/top-biquini.png" alt="Top biquini" />
-        <div>
-          <p>Top biquini tie-die</p>
-          <p>15,99 €</p>
-          <p>1 un. | M | Preto</p>
+      {cestoProdutos.length === 0 ? (
+        <div className="cesto-item">
+          <p>Cesto vazio</p>
         </div>
-      </div>
-      <div className="cesto-item">
-        <img src="./images/cuecas-biquini.png" alt="Cuecas biquini" />
-        <div>
-          <p>Cuecas biquini tie-die</p>
-          <p>12,99 €</p>
-          <p>1 un. | M | Preto</p>
-        </div>
-      </div>
-      <div className="cesto-total">
-        <strong>Total</strong>
-        <span>27,98 €</span>
-      </div>
-      <button className="finalizar-encomenda"
-      onClick={()=> navigate('/finalizar-compra')}
-      >
-      Finalizar encomenda</button>
+      ) : (
+        <>
+          {cestoProdutos.map((produto) => (
+            <div key={produto.id} className="cesto-item">
+              <img src={produto.imagens.frontImg_url} alt={produto.nome} />
+              <div>
+                <p>{produto.nome}</p>
+                <p>{produto.preco} €</p>
+                <p>{produto.quantidade} un. | {produto.tamanho} | {produto.cor}</p>
+              </div>
+            </div>
+          ))}
+          <div className="cesto-total">
+            <strong>Total</strong>
+            <span>{calcularTotal()} €</span>
+          </div>
+          <button className="finalizar-encomenda" onClick={() => navigate('/finalizar-compra')}>
+            Finalizar encomenda
+          </button>
+        </>
+      )}
     </div>
   );
 
   const wishlistContent = (
     <div className="sidebar-cesto-body">
-      <div className="cesto-item">
-        <p>Lista de desejos vazia</p>
-      </div>
+      {wishlistProdutos.length === 0 ? (
+        <div className="cesto-item">
+          <p>Lista de desejos vazia</p>
+        </div>
+      ) : (
+        wishlistProdutos.map((produto) => (
+          <div key={produto.id} className="cesto-item">
+            <img src={produto.imagens.frontImg_url} alt={produto.nome} />
+            <div>
+              <p>{produto.nome}</p>
+              <p>{produto.preco} €</p>
+            </div>
+          </div>
+        ))
+      )}
     </div>
   );
 
   useEffect(() => {
-    const closeSidebar = () => {
-      setIsSidebarActive(false);
-    };
+    const closeSidebar = () => setIsSidebarActive(false);
     const overlayCesto = document.querySelector('.overlay');
     overlayCesto?.addEventListener('click', closeSidebar);
     return () => {
@@ -57,12 +110,10 @@ const CestoWishlist = () => {
 
   return (
     <div>
-      {}
       <div className="cesto-button" onClick={() => setIsSidebarActive(true)}>
         <div className="cesto-icon-img"></div>
       </div>
 
-      {}
       <div className={`sidebar-cesto ${isSidebarActive ? 'active' : ''}`}>
         <div className="sidebar-cesto-header">
           <div
@@ -89,7 +140,7 @@ const CestoWishlist = () => {
           {activeTab === 'cesto' ? cestoContent : wishlistContent}
         </div>
       </div>
-      {}
+
       <div className={`overlay ${isSidebarActive ? 'active' : ''}`} onClick={() => setIsSidebarActive(false)}></div>
     </div>
   );

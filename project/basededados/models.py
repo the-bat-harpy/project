@@ -1,12 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-class Cliente(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    morada = models.CharField(max_length=200, null=True, blank=True)
-    num_tel = models.CharField(max_length=12, null=True, blank=True)
-    cartao = models.CharField(max_length=16, null=True, blank=True)
-    data_nasc = models.DateField(null=True, blank=True)
 
 class Administrador(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -21,6 +15,7 @@ class Tamanho(models.Model):
 
 class Cor(models.Model):
     description = models.CharField(max_length=200)
+    code=models.CharField(max_length=200,null=True, blank=True)
 
 class Tipo(models.Model):
     description = models.CharField(max_length=200)
@@ -39,15 +34,38 @@ class Produto(models.Model):
 class Estado(models.Model):
     description = models.CharField(max_length=200)
 
+class Wishlist(models.Model):
+    produtos = models.ManyToManyField(Produto)
+
+class Cesto(models.Model):
+    produtos = models.ManyToManyField(Produto)
+
+class ProdutoNoCesto(models.Model):
+    cesto = models.ForeignKey('Cesto', on_delete=models.CASCADE, related_name='itens')
+    produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
+    quantidade = models.PositiveIntegerField(default=1)
+    tamanho = models.ForeignKey(Tamanho, on_delete=models.SET_NULL, null=True, blank=True)
+    cor = models.ForeignKey(Cor, on_delete=models.SET_NULL, null=True, blank=True)
+
+    def subtotal(self):
+        return self.quantidade * self.produto.price
+
+
+class Cliente(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    morada = models.CharField(max_length=200, null=True, blank=True)
+    num_tel = models.CharField(max_length=12, null=True, blank=True)
+    cartao = models.CharField(max_length=16, null=True, blank=True)
+    data_nasc = models.DateField(null=True, blank=True)
+    wl = models.OneToOneField(Wishlist, on_delete=models.CASCADE, null=True, blank=True)
+    cesto = models.OneToOneField(Cesto, on_delete=models.CASCADE, null=True, blank=True)
+
+
 class Encomenda(models.Model):
     morada_entrega = models.CharField(max_length=200)
     valor = models.DecimalField(max_digits=10, decimal_places=2)
     estado = models.ForeignKey(Estado, on_delete=models.CASCADE)
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     produtos = models.ManyToManyField(Produto)
-
-class Wishlist(models.Model):
-    produtos = models.ManyToManyField(Produto)
-from django.db import models
 
 # Create your models here.

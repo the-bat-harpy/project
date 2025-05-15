@@ -11,6 +11,8 @@ import CestoWishlistSB from './CestoWishlistSB';
 import ProfileSB from './ProfileSB';
 import ProdutosPage from './Produtos.js'
 import FinalizarCompra from './FinalizarCompra.js'
+import BikinisDetails from './BikinisDetails';
+import Encomendas from './Encomendas'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -20,11 +22,13 @@ root.render(
         <SidebarMenu />
         <CestoWishlistSB />
         <ProfileSB />
-        <Routes>
+       <Routes>
           <Route path="/" element={<App />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/produtos/:tipoId" element={<ProdutosPage />} />
-            <Route path="/finalizar-compra" element={<FinalizarCompra />} />
+          <Route path="/finalizar-compra" element={<FinalizarCompra />} />
+          <Route path="/details/:id" element={<BikinisDetails />} />
+          <Route path="/encomendas" element= {<Encomendas/>}/>
         </Routes>
       </BrowserRouter>
     </AuthProvider>

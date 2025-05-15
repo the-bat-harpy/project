@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { handleLoginOrSignup } from './Auth';
-import { useAuth } from './AuthContext';  // Adicione isso para acessar o contexto de autenticação
+import { useAuth } from './AuthContext';
 
 function ProfileSidebar() {
   const [isSidebarActive, setIsSidebarActive] = useState(false);
@@ -9,7 +9,7 @@ function ProfileSidebar() {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const { isAuthenticated, setIsAuthenticated, logout } = useAuth(); // Acesse 'isAuthenticated' e 'logout' a partir de 'useAuth'
+  const { isAuthenticated, setIsAuthenticated, logout } = useAuth();
 
   useEffect(() => {
     const profileBtn = document.querySelector('.profile-button');
@@ -25,7 +25,7 @@ function ProfileSidebar() {
   const handleLogin = async () => {
     const success = await handleLoginOrSignup(email, password);
     if (success) {
-      setIsAuthenticated(true); // Agora 'setIsAuthenticated' está acessível
+      setIsAuthenticated(true);
       setIsSidebarActive(false);
       window.location.reload();
     }
@@ -86,7 +86,7 @@ function ProfileSidebar() {
                   <button className="sidebar-nav-button" onClick={() => handleNavigate('/profile')}>
                     Dados Pessoais
                   </button>
-                  <button className="sidebar-nav-button" onClick={() => handleNavigate('/pagina2')}>
+                  <button className="sidebar-nav-button" onClick={() => handleNavigate('/encomendas')}>
                     Minhas Encomendas
                   </button>
                   <button className="sidebar-button logout-button" onClick={logout}>
