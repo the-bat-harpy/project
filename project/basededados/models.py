@@ -3,10 +3,10 @@ from django.contrib.auth.models import User
 
 class Cliente(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    morada = models.CharField(max_length=200)
-    num_tel = models.CharField(max_length=12)
-    cartao = models.CharField(max_length=16)
-    data_nasc = models.DateField()
+    morada = models.CharField(max_length=200, null=True, blank=True)
+    num_tel = models.CharField(max_length=12, null=True, blank=True)
+    cartao = models.CharField(max_length=16, null=True, blank=True)
+    data_nasc = models.DateField(null=True, blank=True)
 
 class Administrador(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -22,6 +22,9 @@ class Tamanho(models.Model):
 class Cor(models.Model):
     description = models.CharField(max_length=200)
 
+class Tipo(models.Model):
+    description = models.CharField(max_length=200)
+
 class Produto(models.Model):
     nome = models.CharField(max_length=200)
     price = models.DecimalField(max_digits=10, decimal_places=2)
@@ -30,6 +33,8 @@ class Produto(models.Model):
     imagens = models.OneToOneField(Imagens, on_delete=models.SET_NULL, null=True)
     tamanhos = models.ManyToManyField(Tamanho)
     cores = models.ManyToManyField(Cor)
+    tipo = models.ForeignKey(Tipo, on_delete=models.CASCADE, null=True, blank=True)
+
 
 class Estado(models.Model):
     description = models.CharField(max_length=200)

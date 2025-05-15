@@ -1,90 +1,105 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { handleLoginOrSignup } from './Auth';
+import { useAuth } from './AuthContext';  // Adicione isso para acessar o contexto de autenticação
 
-function ProfileSidebar({ logout, isAuthenticated, setIsAuthenticated }) {
+function ProfileSidebar() {
+  const [isSidebarActive, setIsSidebarActive] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+
+  const { isAuthenticated, setIsAuthenticated, logout } = useAuth(); // Acesse 'isAuthenticated' e 'logout' a partir de 'useAuth'
+
   useEffect(() => {
-    const sidebarProfile = document.createElement('div');
-    sidebarProfile.classList.add('sidebar-profile');
-    document.body.appendChild(sidebarProfile);
-
-    const overlayProfile = document.createElement('div');
-    overlayProfile.classList.add('overlay');
-    document.body.appendChild(overlayProfile);
-
-    const renderLoginForm = () => {
-      sidebarProfile.innerHTML = `
-        <button class="close-profile" aria-label="Fechar">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor"
-            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
-            <line x1="18" y1="6" x2="6" y2="18" />
-            <line x1="6" y1="6" x2="18" y2="18" />
-          </svg>
-        </button>
-        <h2 class="sidebar-title">Login/Registo</h2>
-        <p class="sidebar-subtitle">Introduza o seu email</p>
-        <input type="email" placeholder="Email" class="sidebar-input" />
-        <input type="password" placeholder="Palavra-passe" class="sidebar-input" />
-        <button class="sidebar-button" id="loginButton">Seguinte</button>
-      `;
-
-      sidebarProfile.querySelector('.close-profile')?.addEventListener('click', () => {
-        sidebarProfile.classList.remove('active');
-        overlayProfile.classList.remove('active');
-      });
-
-      document.getElementById('loginButton')?.addEventListener('click', async () => {
-        const email = sidebarProfile.querySelector('input[type="email"]').value;
-        const password = sidebarProfile.querySelector('input[type="password"]').value;
-
-        const success = await handleLoginOrSignup(email, password);
-        if (success) {
-          setIsAuthenticated(true);
-          window.location.reload();
-        }
-      });
-    };
-
-    const token = localStorage.getItem('auth_token');
-    if (!token) {
-      renderLoginForm();
-    } else {
-      const userData = JSON.parse(localStorage.getItem('user_data')) || {};
-      const greetingName = userData.username || userData.email;
-
-      sidebarProfile.innerHTML = `
-        <div class="sidebar-logged-in">
-          <h2 class="sidebar-title">Olá, ${greetingName}</h2>
-          <div class="sidebar-actions">
-            <button class="sidebar-nav-button" id="profile">Dados Pessoais</button>
-            <button class="sidebar-nav-button" id="gotoPage2">Minhas Encomendas</button>
-            <button class="sidebar-button logout-button">Terminar Sessão</button>
-          </div>
-        </div>
-      `;
-
-      sidebarProfile.querySelector('.logout-button')?.addEventListener('click', logout);
-      document.getElementById('profile')?.addEventListener('click', () => (window.location.href = '/Profile'));
-      document.getElementById('gotoPage2')?.addEventListener('click', () => (window.location.href = '/pagina2'));
-    }
-
     const profileBtn = document.querySelector('.profile-button');
-    profileBtn?.addEventListener('click', () => {
-      sidebarProfile.classList.toggle('active');
-      overlayProfile.classList.toggle('active');
-    });
+    const handleClick = () => setIsSidebarActive(!isSidebarActive);
 
-    overlayProfile?.addEventListener('click', () => {
-      sidebarProfile.classList.remove('active');
-      overlayProfile.classList.remove('active');
-    });
+    profileBtn?.addEventListener('click', handleClick);
 
     return () => {
-      sidebarProfile.remove();
-      overlayProfile.remove();
+      profileBtn?.removeEventListener('click', handleClick);
     };
-  }, [logout, isAuthenticated, setIsAuthenticated]);
+  }, [isSidebarActive]);
 
-  return null;
+  const handleLogin = async () => {
+    const success = await handleLoginOrSignup(email, password);
+    if (success) {
+      setIsAuthenticated(true); // Agora 'setIsAuthenticated' está acessível
+      setIsSidebarActive(false);
+      window.location.reload();
+    }
+  };
+
+  const handleNavigate = (path) => {
+    setIsSidebarActive(false);
+    navigate(path);
+  };
+
+  const userData = JSON.parse(localStorage.getItem('user_data')) || {};
+  const greetingName = userData.username || userData.email;
+
+  return (
+    <>
+      {isSidebarActive && (
+        <>
+          <div className="overlay" onClick={() => setIsSidebarActive(false)}></div>
+
+          <div className="sidebar-profile active">
+            <button
+              className="close-profile"
+              aria-label="Fechar"
+              onClick={() => setIsSidebarActive(false)}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                   stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                   className="feather feather-x">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            </button>
+
+            {!isAuthenticated ? (
+              <>
+                <h2 className="sidebar-title">Login/Registo</h2>
+                <p className="sidebar-subtitle">Introduza o seu email</p>
+                <input
+                  type="email"
+                  placeholder="Email"
+                  className="sidebar-input"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                <input
+                  type="password"
+                  placeholder="Palavra-passe"
+                  className="sidebar-input"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <button className="sidebar-button" onClick={handleLogin}>Seguinte</button>
+              </>
+            ) : (
+              <div className="sidebar-logged-in">
+                <h2 className="sidebar-title">Olá, {greetingName}</h2>
+                <div className="sidebar-actions">
+                  <button className="sidebar-nav-button" onClick={() => handleNavigate('/profile')}>
+                    Dados Pessoais
+                  </button>
+                  <button className="sidebar-nav-button" onClick={() => handleNavigate('/pagina2')}>
+                    Minhas Encomendas
+                  </button>
+                  <button className="sidebar-button logout-button" onClick={logout}>
+                    Terminar Sessão
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        </>
+      )}
+    </>
+  );
 }
 
 export default ProfileSidebar;

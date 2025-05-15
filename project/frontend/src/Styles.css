@@ -214,12 +214,12 @@
   left: 28px;
 }
 
-.towels-image {
+.pareo-image {
   width: 201px;
-  height: 311px;
-  background-image: url("./images/toalha.png");
-  top: -10px;
-  left: 34px;
+  height: 250px;
+  background-image: url("./images/pareoblue.png");
+  top: 55px;
+  left: 50px;
 }
 
 /* SIDEBAR */

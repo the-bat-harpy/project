@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import './Styles.css';
+import {useNavigate} from 'react-router-dom'
 
 const CestoWishlist = () => {
   const [isSidebarActive, setIsSidebarActive] = useState(false);
   const [activeTab, setActiveTab] = useState('cesto');
+  const navigate= useNavigate()
 
   const cestoContent = (
     <div className="sidebar-cesto-body">
@@ -27,7 +29,10 @@ const CestoWishlist = () => {
         <strong>Total</strong>
         <span>27,98 €</span>
       </div>
-      <button className="finalizar-encomenda">Finalizar encomenda</button>
+      <button className="finalizar-encomenda"
+      onClick={()=> navigate('/finalizar-compra')}
+      >
+      Finalizar encomenda</button>
     </div>
   );
 

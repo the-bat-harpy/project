@@ -36,11 +36,11 @@ export const handleLoginOrSignup = async (email, password) => {
         }
       } catch (signupError) {
         console.error('Erro ao tentar registrar o user:', signupError.response ? signupError.response.data : signupError.message);
-        alert('Erro ao registrar o user.');
+        alert('Erro ao registrar user.');
       }
     } else {
       console.error('Erro desconhecido ao tentar fazer login:', error.response ? error.response.data : error.message);
-      alert('Erro desconhecido ao tentar fazer login!');
+      alert('Erro desconhecido ao tentar fazer login');
     }
   }
 

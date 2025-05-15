@@ -1,45 +1,50 @@
-import { useEffect } from 'react';
-
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 const SidebarMenu = () => {
+  const [isMenuActive, setIsMenuActive] = useState(false);
+  const navigate = useNavigate();
+
+  const toggleMenu = () => {
+    setIsMenuActive(!isMenuActive);
+  };
+
   useEffect(() => {
-    // SIDEBAR MENU
-    const sidebarMenu = document.createElement('div');
-    sidebarMenu.classList.add('sidebar');
-    sidebarMenu.innerHTML = `
-      <ul>
-        <li>Bikinis</li>
-        <li>Sandálias</li>
-        <li>Toalhas</li>
-        <li>Malas</li>
-        <li>Óculos de sol</li>
-        <li>Pareos</li>
-        <li>Saias</li>
-        <li>Vestidos</li>
-      </ul>
-    `;
-    document.body.appendChild(sidebarMenu);
+    const handleClickOutside = (e) => {
+      if (!e.target.closest('.sidebar') && !e.target.closest('.menu-button')) {
+        setIsMenuActive(false);
+      }
+    };
 
-    const overlayMenu = document.createElement('div');
-    overlayMenu.classList.add('overlay');
-    document.body.appendChild(overlayMenu);
-
-    overlayMenu.addEventListener('click', () => {
-      sidebarMenu.classList.remove('active');
-      overlayMenu.classList.remove('active');
-    });
-
-    document.querySelector('.menu-button')?.addEventListener('click', () => {
-      sidebarMenu.classList.add('active');
-      overlayMenu.classList.add('active');
-    });
-
+    document.addEventListener('click', handleClickOutside);
     return () => {
-      sidebarMenu.remove();
-      overlayMenu.remove();
+      document.removeEventListener('click', handleClickOutside);
     };
   }, []);
 
-  return null;
+  const handleNavigation = (tipoId) => {
+    navigate(`/produtos/${tipoId}`);
+    setIsMenuActive(false);
+  };
+
+  return (
+    <>
+      <div className="menu-button" onClick={toggleMenu}>
+        <div className="menu-text">Menu</div>
+      </div>
+
+      {isMenuActive && (
+        <div className="sidebar active">
+          <div className="overlay" onClick={() => setIsMenuActive(false)}></div>
+          <ul>
+            <li onClick={() => handleNavigation(1)}>Bikinis</li>
+            <li onClick={() => handleNavigation(2)}>Sandálias</li>
+            <li onClick={() => handleNavigation(3)}>Óculos de sol</li>
+            <li onClick={() => handleNavigation(4)}>Pareos</li>
+          </ul>
+        </div>
+      )}
+    </>
+  );
 };
 
 export default SidebarMenu;

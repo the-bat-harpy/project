@@ -4,9 +4,60 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0c2465a5-7243-49af-9ad3-fcd721303153" name="Changes" comment="em componentes">
+    <list default="true" id="0c2465a5-7243-49af-9ad3-fcd721303153" name="Changes" comment="para a laura">
+      <change afterPath="$PROJECT_DIR$/project/frontend/public/images/bikini.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/frontend/public/images/cesto.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/frontend/public/images/cuecas-azuis.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/frontend/public/images/cuecas-castanhas.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/frontend/public/images/cuecas-flores.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/frontend/public/images/cuecas-vermelhas.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/frontend/public/images/dados.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/frontend/public/images/encomendas.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/frontend/public/images/oculos.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/frontend/public/images/pareoblack.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/frontend/public/images/pareoblue.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/frontend/public/images/praia.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/frontend/public/images/sandalias-castanhas.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/frontend/public/images/sandalias-douradas.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/frontend/public/images/sapatos.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/frontend/public/images/search.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/frontend/public/images/sunglassesblack.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/frontend/public/images/sunglassesretro.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/frontend/public/images/toalha.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/frontend/public/images/top-azul.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/frontend/public/images/top-castanho.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/frontend/public/images/top-flores.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/frontend/public/images/top-vermelho.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/frontend/public/images/user.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/frontend/src/images/cuecas-azuis.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/frontend/src/images/cuecas-castanhas.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/frontend/src/images/pareoblack.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/frontend/src/images/pareoblue.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/frontend/src/images/sandalias-castanhas.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/frontend/src/images/sandalias-douradas.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/frontend/src/images/sunglassesblack.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/frontend/src/images/sunglassesretro.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/frontend/src/images/top-azul.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/frontend/src/images/top-castanho.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/frontend/src/images/top-flores.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/frontend/src/images/top-vermelho.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/basededados/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/project/basededados/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/basededados/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/project/basededados/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/project/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/project/frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/project/frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/project/frontend/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/frontend/src/Auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/project/frontend/src/Auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/frontend/src/CestoWishlistSB.js" beforeDir="false" afterPath="$PROJECT_DIR$/project/frontend/src/CestoWishlistSB.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/frontend/src/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/project/frontend/src/Header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/frontend/src/MenuSB.js" beforeDir="false" afterPath="$PROJECT_DIR$/project/frontend/src/MenuSB.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/frontend/src/ProfileSB.js" beforeDir="false" afterPath="$PROJECT_DIR$/project/frontend/src/ProfileSB.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/frontend/src/SearchBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/project/frontend/src/SearchBar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/frontend/src/Styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/project/frontend/src/Styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/frontend/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/project/frontend/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/project/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/project/project/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/project/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/project/project/urls.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,22 +99,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/carolinaavelas/PycharmProjects/project/project/frontend/src/images&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.create_products.executor": "Debug",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/Users/carolinaavelas/PycharmProjects/project/project/frontend/public"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/project/frontend/public" />
       <recent name="$PROJECT_DIR$/project/frontend/src/images" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/project/frontend/src/images" />
-      <recent name="$PROJECT_DIR$/project/frontend/public/images" />
       <recent name="$PROJECT_DIR$/project/frontend/src" />
+      <recent name="$PROJECT_DIR$/project/frontend/src/images" />
+      <recent name="$PROJECT_DIR$/project/project" />
+      <recent name="$PROJECT_DIR$/project/frontend" />
+      <recent name="$PROJECT_DIR$/project/frontend/public/images" />
     </key>
   </component>
   <component name="SharedIndexes">
@@ -202,7 +257,15 @@
       <option name="project" value="LOCAL" />
       <updated>1747133314923</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="para a laura">
+      <option name="closed" value="true" />
+      <created>1747165415551</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1747165415551</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -228,7 +291,8 @@
     <MESSAGE value="ficheiros" />
     <MESSAGE value="homepage, login, cestos, wishlists..." />
     <MESSAGE value="em componentes" />
-    <option name="LAST_COMMIT_MESSAGE" value="em componentes" />
+    <MESSAGE value="para a laura" />
+    <option name="LAST_COMMIT_MESSAGE" value="para a laura" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -237,6 +301,11 @@
           <url>file://$PROJECT_DIR$/project/create_users.py</url>
           <line>5</line>
           <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/project/basededados/views.py</url>
+          <line>9</line>
+          <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

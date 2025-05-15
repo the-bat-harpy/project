@@ -30,9 +30,7 @@ function SearchBar() {
 
   return (
     <>
-      <div className="search-bar">
-        <div className="search-text">Pesquisar</div>
-      </div>
+
 
       <div className="search-toggle collapsed" id="searchToggle">
         <div className="search-icon-img"></div>
