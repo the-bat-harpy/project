@@ -5,6 +5,21 @@ import axios from 'axios';
 
 const BASE_URL = 'http://localhost:8000/api';
 
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
+
 const CestoWishlist = () => {
   const [isSidebarActive, setIsSidebarActive] = useState(false);
   const [activeTab, setActiveTab] = useState('cesto');
@@ -44,14 +59,38 @@ const CestoWishlist = () => {
 
   const removerDoCesto = async (produtoId) => {
     try {
+      const csrftoken = getCookie('csrftoken');
       await axios.delete(`${BASE_URL}/cesto/${produtoId}/`, {
         withCredentials: true,
+        headers: {
+          'X-CSRFToken': csrftoken,
+        },
       });
       fetchCestoProdutos();
     } catch (error) {
       console.error('Erro ao remover do cesto:', error);
     }
   };
+
+  const handleRemoveFromWishlist = async (produtoId) => {
+     try {
+    const csrftoken = getCookie('csrftoken');
+    await axios.delete(`${BASE_URL}/wishlist/remove/`, {
+      produto_id: produtoId
+    }, {
+      headers: {
+        'X-CSRFToken': csrftoken,
+        'Content-Type': 'application/json',
+      },
+      withCredentials: true,
+    });
+
+    fetchWishlistProdutos(); // Atualiza lista
+  } catch (error) {
+    console.error('Erro ao remover da wishlist:', error.response?.data || error.message);
+  }
+};
+
 
   const calcularTotal = () =>
     cestoProdutos
@@ -109,6 +148,13 @@ const CestoWishlist = () => {
               <p>{produto.nome}</p>
               <p>{produto.preco} €</p>
             </div>
+            <button
+              className="wishlist-remove"
+              onClick={() => handleRemoveFromWishlist(produto.id)}
+              title="Remover da wishlist"
+            >
+              🗑️
+            </button>
           </div>
         ))
       )}
@@ -125,7 +171,7 @@ const CestoWishlist = () => {
   }, []);
 
   return (
-    <div>
+    <>
       <div className="cesto-button" onClick={() => setIsSidebarActive(true)}>
         <div className="cesto-icon-img"></div>
       </div>
@@ -158,7 +204,7 @@ const CestoWishlist = () => {
       </div>
 
       <div className={`overlay ${isSidebarActive ? 'active' : ''}`} onClick={() => setIsSidebarActive(false)}></div>
-    </div>
+    </>
   );
 };
 

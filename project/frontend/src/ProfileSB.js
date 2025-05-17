@@ -27,7 +27,7 @@ function ProfileSidebar() {
     if (success) {
       setIsAuthenticated(true);
       setIsSidebarActive(false);
-      window.location.reload();
+     // window.location.reload();
     }
   };
 

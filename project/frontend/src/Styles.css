@@ -628,3 +628,20 @@
 .cesto-item-info {
   flex-grow: 1;
 }
+.wishlist-to-cart-btn {
+  margin-top: 8px;
+  padding: 6px 10px;
+  background-color: #d87a7a;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.wishlist-to-cart-btn:hover {
+  background-color: #c76565;
+}
+
+.wishlist-remove:hover {
+ transform: scale(1.2);
+}

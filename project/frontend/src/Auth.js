@@ -2,12 +2,10 @@ import axios from 'axios';
 
 export const handleLoginOrSignup = async (email, password) => {
   try {
-    await axios.get('http://127.0.0.1:8000/api/csrf/', {
-      withCredentials: true,
-    });
+
 
     let response = await axios.post(
-      'http://127.0.0.1:8000/api/login/',
+      'http://localhost:8000/api/login/',
       {
         username: email,
         password: password,
@@ -31,7 +29,7 @@ export const handleLoginOrSignup = async (email, password) => {
 
       try {
         let signupResponse = await axios.post(
-          'http://127.0.0.1:8000/api/signup/',
+          'http://localhost:8000/api/signup/',
           {
             email,
             password,

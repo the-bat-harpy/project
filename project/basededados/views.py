@@ -1,14 +1,19 @@
 import json
+
+import logging
 from django.http import JsonResponse
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404
 from django.views.decorators.http import require_http_methods
-from rest_framework.decorators import api_view
+from rest_framework import status
+from rest_framework.decorators import api_view, permission_classes
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework.response import Response
 
-from .models import Produto, Cliente, Tamanho, Cor, ProdutoNoCesto, Cesto, Tipo, Encomenda, Imagens
+from .models import Produto, Cliente, Tamanho, Cor, ProdutoNoCesto, Cesto, Tipo, Encomenda, Imagens, Wishlist
 
-
+@api_view(['GET'])
 def get_products_by_tipo(request, tipo_id):
     produtos = Produto.objects.filter(tipo_id=tipo_id)
 
@@ -27,7 +32,7 @@ def get_products_by_tipo(request, tipo_id):
         })
     return JsonResponse(produtos_data, safe=False)
 
-
+@api_view(['GET'])
 def tipo_produto_descricao(request, tipo_id):
     try:
         tipo = Tipo.objects.get(id=tipo_id)
@@ -35,7 +40,8 @@ def tipo_produto_descricao(request, tipo_id):
     except Tipo.DoesNotExist:
         return JsonResponse({'error': 'Tipo não encontrado'}, status=404)
 
-
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def produtos_no_cesto(request):
     user = request.user
     if not user.is_authenticated:
@@ -62,12 +68,15 @@ def produtos_no_cesto(request):
             'quantidade': item.quantidade,
             'tamanho': item.tamanho.description if item.tamanho else None,
             'cor': item.cor.description if item.cor else None,
-            'imagem': imagem_url,
+            'imagens': {
+                'frontImg_url': imagem_url
+            }
         })
 
     return JsonResponse(produtos_data, safe=False)
 
-
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def wishlist_view(request):
     try:
         user = request.user
@@ -97,7 +106,7 @@ def wishlist_view(request):
     except Cliente.DoesNotExist:
         return JsonResponse({'error': 'Cliente não encontrado'}, status=404)
 
-
+@api_view(['GET'])
 def produto_detalhes_view(request, produto_id):
     try:
         produto = Produto.objects.get(id=produto_id)
@@ -128,10 +137,11 @@ def produto_detalhes_view(request, produto_id):
         return JsonResponse({'error': 'Produto não encontrado'}, status=404)
 
 
-@require_http_methods(["POST"])
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
 def adicionar_ao_cesto(request):
     try:
-        data = json.loads(request.body)
+        data = request.data
         produto_id = data.get('produto_id')
         tamanho_desc = data.get('tamanho')
         cor_desc = data.get('cor')
@@ -145,7 +155,12 @@ def adicionar_ao_cesto(request):
             cliente.save()
 
         produto = Produto.objects.get(id=produto_id)
-        tamanho = Tamanho.objects.get(description=tamanho_desc)
+        tamanhos = Tamanho.objects.filter(description=tamanho_desc)
+        if not tamanhos.exists():
+            return JsonResponse({'error': 'Tamanho inválido'}, status=404)
+
+        tamanho = tamanhos.first()
+
         cor = Cor.objects.get(description=cor_desc)
 
         item, criado = ProdutoNoCesto.objects.get_or_create(
@@ -170,10 +185,13 @@ def adicionar_ao_cesto(request):
     except Cor.DoesNotExist:
         return JsonResponse({'error': 'Cor inválida'}, status=404)
     except Exception as e:
+        import traceback
+        traceback.print_exc()
         return JsonResponse({'error': str(e)}, status=500)
 
 
-@require_http_methods(["PUT"])
+@api_view(["PUT"])
+@permission_classes([IsAuthenticated])
 def update_profile_view(request):
     if not request.user.is_authenticated:
         return JsonResponse({'error': 'Usuário não autenticado'}, status=401)
@@ -212,13 +230,19 @@ def update_profile_view(request):
 
     return JsonResponse({'success': 'Perfil atualizado com sucesso'})
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def encomendas_view(request):
-    try:
-        cliente = Cliente.objects.get(user=request.user)
-    except Cliente.DoesNotExist:
-        return JsonResponse({'error': 'Cliente não encontrado'}, status=404)
+    user = request.user
 
-    encomendas = Encomenda.objects.filter(cliente=cliente).select_related('estado').prefetch_related('produtos__imagens')
+    if user.is_superuser:
+        encomendas = Encomenda.objects.all().select_related('estado').prefetch_related('produtos__imagens')
+    else:
+        try:
+            cliente = Cliente.objects.get(user=user)
+        except Cliente.DoesNotExist:
+            return JsonResponse({'error': 'Cliente não encontrado'}, status=404)
+        encomendas = Encomenda.objects.filter(cliente=cliente).select_related('estado').prefetch_related('produtos__imagens')
 
     data = []
     for encomenda in encomendas:
@@ -235,10 +259,15 @@ def encomendas_view(request):
         })
 
     return JsonResponse({
-        'username': request.user.username,
+        'username': user.username,
         'encomendas': data
     })
+from django.http import JsonResponse
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def finalizar_compra_view(request):
     user = request.user
     if not user.is_authenticated:
@@ -253,19 +282,26 @@ def finalizar_compra_view(request):
         return JsonResponse({'error': 'Cesto não encontrado'}, status=404)
 
     cliente_data = {
-        'nome': user.username,
-        'telefone': cliente.telemovel,
-        'morada': cliente.morada,
+        'nome': user.username or '',
+        'telefone': cliente.num_tel or '',
+        'morada': cliente.morada or '',
+        'cartao': cliente.cartao or '',
     }
 
     produtos = []
+    total = 0.0
+
     for item in cesto.itens.all():
         produto = item.produto
+        preco = float(produto.price)
+        subtotal = preco * item.quantidade
+        total += subtotal
+
         imagem_url = produto.imagens.frontImg_url if produto.imagens else None
         produtos.append({
             'id': produto.id,
             'nome': produto.nome,
-            'preco': str(produto.price),
+            'preco': f"{preco:.2f}",
             'quantidade': item.quantidade,
             'tamanho': item.tamanho.description if item.tamanho else None,
             'cor': item.cor.description if item.cor else None,
@@ -275,20 +311,100 @@ def finalizar_compra_view(request):
     return JsonResponse({
         'cliente': cliente_data,
         'produtos': produtos,
+        'total': round(total, 2)
     })
 
-@require_http_methods(["PUT"])
-def editar_encomenda_view(request, encomenda_id):
+logger = logging.getLogger(__name__)
+
+@api_view(["PUT"])
+@permission_classes([IsAuthenticated])
+def criar_ou_editar_encomenda_view(request):
+    """
+    View para criar ou editar encomenda via PUT.
+    Se for enviado 'encomenda_id' no body, tenta editar.
+    Caso contrário, cria nova encomenda.
+    """
     user = request.user
+    logger.info(f"Usuário {user} iniciou criar_ou_editar_encomenda_view")
 
     try:
-        encomenda = Encomenda.objects.get(id=encomenda_id, cliente__user=user)
+        cliente = Cliente.objects.get(user=user)
+        logger.debug(f"Cliente encontrado: {cliente}")
+    except Cliente.DoesNotExist:
+        logger.error(f"Cliente para o usuário {user} não encontrado")
+        return JsonResponse({'error': 'Cliente não encontrado'}, status=404)
+
+    try:
+        data = json.loads(request.body)
+        logger.debug(f"Dados recebidos: {data}")
+    except json.JSONDecodeError:
+        logger.error("Erro ao decodificar JSON no corpo da requisição")
+        return JsonResponse({'error': 'JSON inválido'}, status=400)
+
+    encomenda_id = data.get('encomenda_id')
+    morada_entrega = data.get('morada_entrega')
+    cartao_numero = data.get('cartao_numero')
+
+    logger.info(f"Tentativa de editar encomenda_id={encomenda_id}")
+
+    encomenda = None
+    if encomenda_id:
+        encomenda = Encomenda.objects.filter(id=encomenda_id, cliente=cliente).first()
+        if encomenda:
+            logger.info(f"Encomenda encontrada para edição: ID {encomenda.id}")
+        else:
+            logger.warning(f"Encomenda com ID {encomenda_id} não encontrada para o cliente {cliente}")
+
+    if not encomenda:
+        encomenda = Encomenda(cliente=cliente)
+        logger.info("Criando nova encomenda")
+
+    if morada_entrega is not None:
+        encomenda.morada_entrega = morada_entrega
+        logger.debug(f"Morada de entrega atualizada para: {morada_entrega}")
+
+    if cartao_numero is not None:
+        encomenda.cartao_numero = cartao_numero
+        logger.debug(f"Número do cartão atualizado para: {cartao_numero}")
+
+    encomenda.save()
+    logger.info(f"Encomenda salva com ID: {encomenda.id}")
+
+    return JsonResponse({
+        'success': 'Encomenda criada/atualizada com sucesso',
+        'encomenda_id': encomenda.id
+    })
+
+
+@api_view(["PUT"])
+@permission_classes([IsAuthenticated])
+def editar_encomenda_por_id_view(request, encomenda_id):
+    """
+    View para editar encomenda existente pelo ID passado na URL.
+    Apenas campos morada_entrega e cartao_numero são atualizados.
+    """
+    user = request.user
+    logger.info(f"Usuário {user} iniciou editar_encomenda_por_id_view para encomenda_id={encomenda_id}")
+
+    try:
+        cliente = Cliente.objects.get(user=user)
+        logger.debug(f"Cliente encontrado: {cliente}")
+    except Cliente.DoesNotExist:
+        logger.error(f"Cliente para o usuário {user} não encontrado")
+        return JsonResponse({'error': 'Cliente não encontrado'}, status=404)
+
+    try:
+        encomenda = Encomenda.objects.get(id=encomenda_id, cliente=cliente)
+        logger.info(f"Encomenda encontrada: ID {encomenda.id}")
     except Encomenda.DoesNotExist:
+        logger.error(f"Encomenda com ID {encomenda_id} não encontrada para o cliente {cliente}")
         return JsonResponse({'error': 'Encomenda não encontrada'}, status=404)
 
     try:
         data = json.loads(request.body)
+        logger.debug(f"Dados recebidos para atualização: {data}")
     except json.JSONDecodeError:
+        logger.error("Erro ao decodificar JSON no corpo da requisição")
         return JsonResponse({'error': 'JSON inválido'}, status=400)
 
     morada_entrega = data.get('morada_entrega')
@@ -296,12 +412,19 @@ def editar_encomenda_view(request, encomenda_id):
 
     if morada_entrega is not None:
         encomenda.morada_entrega = morada_entrega
+        logger.debug(f"Morada de entrega atualizada para: {morada_entrega}")
+
     if cartao_numero is not None:
         encomenda.cartao_numero = cartao_numero
+        logger.debug(f"Número do cartão atualizado para: {cartao_numero}")
 
     encomenda.save()
+    logger.info(f"Encomenda atualizada com ID: {encomenda.id}")
 
-    return JsonResponse({'success': 'Encomenda atualizada com sucesso'})
+    return JsonResponse({
+        'success': 'Encomenda atualizada com sucesso',
+        'encomenda_id': encomenda.id
+    })
 
 @api_view(['GET'])
 def pesquisar_produtos(request):
@@ -324,41 +447,132 @@ def pesquisar_produtos(request):
 
     return JsonResponse(produtos_data, safe=False)
 
-
+@api_view(['GET'])
 def listar_tipos(request):
     tipos = Tipo.objects.all().values('id', 'description')
     tipos_list = list(tipos)
     return JsonResponse(tipos_list, safe=False)
 
-@csrf_exempt
+@api_view(['POST'])
 def adicionar_produto(request):
-    print(request.data)
-    if request.method == 'POST':
-        nome = request.POST.get('nome')
-        preco = request.POST.get('price')
-        descricao = request.POST.get('description')
-        quantidade = request.POST.get('quantidade', 0)
-        tipo_id = request.POST.get('categoria')
 
-        frontImg = request.FILES.get('frontImg')
-        backImg = request.FILES.get('backImg')
+    nome = request.POST.get('nome')
+    preco = request.POST.get('price')
+    descricao = request.POST.get('description')
+    tipo_id = request.POST.get('tipo')
 
-        if not all([nome, preco, descricao, tipo_id, frontImg, backImg]):
-            return JsonResponse({'error': 'Faltam campos obrigatórios'}, status=400)
+    frontImg = request.FILES.get('frontImg')
+    backImg = request.FILES.get('backImg')
 
-        tipo = get_object_or_404(Tipo, id=tipo_id)
+    campos_faltando = []
+    if not nome:
+        campos_faltando.append('nome')
+    if not preco:
+        campos_faltando.append('preco')
+    if not descricao:
+        campos_faltando.append('descricao')
+    if not tipo_id:
+        campos_faltando.append('tipo')
+    if not frontImg:
+        campos_faltando.append('frontImg')
+    if not backImg:
+        campos_faltando.append('backImg')
 
-        imagens = Imagens.objects.create(frontImg=frontImg, backImg=backImg)
+    if campos_faltando:
+        return JsonResponse({'error': f'Campos obrigatórios em falta: {", ".join(campos_faltando)}'}, status=400)
 
-        produto = Produto.objects.create(
-            nome=nome,
-            price=preco,
-            description=descricao,
-            quantidade=quantidade,
-            tipo=tipo,
-            imagens=imagens,
-        )
+    tipo = get_object_or_404(Tipo, id=tipo_id)
 
-        return JsonResponse({'status': 'Produto criado com sucesso', 'produto_id': produto.id})
+    imagens = Imagens.objects.create(
+        frontImg_url=frontImg,
+        backImg_url=backImg,
+    )
 
-    return JsonResponse({'error': 'Método não permitido'}, status=405)
+    produto = Produto.objects.create(
+        nome=nome,
+        price=preco,
+        description=descricao,
+        quantidade=0,
+        tipo=tipo,
+        imagens=imagens,
+    )
+
+    return JsonResponse({'status': 'Produto criado com sucesso', 'produto_id': produto.id})
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def remover_do_cesto(request, produto_id):
+    user = request.user
+
+    try:
+        cliente = Cliente.objects.get(user=user)
+        cesto = cliente.cesto
+    except Cliente.DoesNotExist:
+        return JsonResponse({'error': 'Cliente não encontrado'}, status=404)
+    except AttributeError:
+        return JsonResponse({'error': 'Cesto não encontrado'}, status=404)
+
+    try:
+        item = ProdutoNoCesto.objects.get(cesto=cesto, produto_id=produto_id)
+        item.delete()
+        return JsonResponse({'success': 'Produto removido do cesto'})
+    except ProdutoNoCesto.DoesNotExist:
+        return JsonResponse({'error': 'Produto não encontrado no cesto'}, status=404)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def adicionar_wishlist(request):
+    try:
+        produto_id = request.data.get('produto_id')
+        produto = Produto.objects.get(id=produto_id)
+        cliente = Cliente.objects.get(user=request.user)
+        if not cliente.wl:
+            # Cria wishlist se não existir
+            from .models import Wishlist
+            cliente.wl = Wishlist.objects.create()
+            cliente.save()
+        cliente.wl.produtos.add(produto)
+        return Response({"success": "Produto adicionado à wishlist!"})
+    except Exception as e:
+        return Response({"error": str(e)}, status=400)
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def remover_da_wishlist(request):
+    try:
+        data = json.loads(request.body)
+        produto_id = data.get('produto_id')
+        produto = Produto.objects.get(id=produto_id)
+
+        wishlist = Wishlist.objects.get(user=request.user)
+        wishlist.produtos.remove(produto)
+
+        return JsonResponse({'mensagem': 'Produto removido da wishlist com sucesso!'})
+    except Produto.DoesNotExist:
+        return JsonResponse({'erro': 'Produto não encontrado.'}, status=404)
+    except Wishlist.DoesNotExist:
+        return JsonResponse({'erro': 'Wishlist não encontrada.'}, status=404)
+    except Exception as e:
+        return JsonResponse({'erro': str(e)}, status=400)
+
+@api_view(['POST'])
+@permission_classes([IsAdminUser])
+def alterar_quantidade_produto(request):
+    produto_id = request.data.get('produto_id')
+    quantidade = request.data.get('quantidade')
+
+    if produto_id is None or quantidade is None:
+        return Response({"error": "produto_id e quantidade são obrigatórios."}, status=400)
+
+    try:
+        quantidade_int = int(quantidade)
+        if quantidade_int < 0:
+            return Response({"error": "Quantidade deve ser maior ou igual a zero."}, status=400)
+    except ValueError:
+        return Response({"error": "Quantidade deve ser um número inteiro."}, status=400)
+
+    produto = get_object_or_404(Produto, id=produto_id)
+    produto.quantidade = quantidade_int
+    produto.save()
+
+    return Response({"success": True, "produto_id": produto_id, "quantidade": quantidade_int})

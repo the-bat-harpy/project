@@ -9,10 +9,11 @@
       <change beforePath="$PROJECT_DIR$/project/basededados/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/project/basededados/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/basededados/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/project/basededados/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/project/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/frontend/src/Auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/project/frontend/src/Auth.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/frontend/src/CestoWishlistSB.js" beforeDir="false" afterPath="$PROJECT_DIR$/project/frontend/src/CestoWishlistSB.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/frontend/src/SearchBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/project/frontend/src/SearchBar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/frontend/src/ProfileSB.js" beforeDir="false" afterPath="$PROJECT_DIR$/project/frontend/src/ProfileSB.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/frontend/src/Styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/project/frontend/src/Styles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/frontend/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/project/frontend/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/project/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/project/project/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/project/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/project/project/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/project/view.py" beforeDir="false" afterPath="$PROJECT_DIR$/project/project/view.py" afterDir="false" />
     </list>
@@ -56,15 +57,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.create_products.executor": "Debug",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "/Users/carolinaavelas/PycharmProjects/project/project/frontend/public"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.create_products.executor&quot;: &quot;Debug&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/carolinaavelas/PycharmProjects/project/project/frontend/public&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/project/frontend/public" />
@@ -238,7 +239,15 @@
       <option name="project" value="LOCAL" />
       <updated>1747335154482</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="15-5">
+      <option name="closed" value="true" />
+      <created>1747345540010</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1747345540010</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

@@ -53,6 +53,7 @@ class ProdutoNoCesto(models.Model):
 
 class Cliente(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    email = models.EmailField(null=True, blank=True)
     morada = models.CharField(max_length=200, null=True, blank=True)
     num_tel = models.CharField(max_length=12, null=True, blank=True)
     cartao = models.CharField(max_length=16, null=True, blank=True)
