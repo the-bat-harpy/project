@@ -28,6 +28,10 @@ const CestoWishlist = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    fetchCestoProdutos();
+  }, []);
+
+  useEffect(() => {
     if (activeTab === 'cesto') {
       fetchCestoProdutos();
     } else {
@@ -37,9 +41,11 @@ const CestoWishlist = () => {
 
   const fetchCestoProdutos = async () => {
     try {
+      console.log("Buscando produtos do cesto...");
       const response = await axios.get(`${BASE_URL}/cesto/`, {
         withCredentials: true,
       });
+      console.log('Resposta cesto:', response.data);
       setCestoProdutos(response.data);
     } catch (error) {
       console.error('Erro ao carregar o cesto:', error);
@@ -48,9 +54,11 @@ const CestoWishlist = () => {
 
   const fetchWishlistProdutos = async () => {
     try {
+      console.log("Buscando produtos da wishlist...");
       const response = await axios.get(`${BASE_URL}/wishlist/`, {
         withCredentials: true,
       });
+      console.log('Resposta wishlist:', response.data);
       setWishlistProdutos(response.data);
     } catch (error) {
       console.error('Erro ao carregar a wishlist:', error);
@@ -72,26 +80,6 @@ const CestoWishlist = () => {
     }
   };
 
-  const handleRemoveFromWishlist = async (produtoId) => {
-     try {
-    const csrftoken = getCookie('csrftoken');
-    await axios.delete(`${BASE_URL}/wishlist/remove/`, {
-      produto_id: produtoId
-    }, {
-      headers: {
-        'X-CSRFToken': csrftoken,
-        'Content-Type': 'application/json',
-      },
-      withCredentials: true,
-    });
-
-    fetchWishlistProdutos(); // Atualiza lista
-  } catch (error) {
-    console.error('Erro ao remover da wishlist:', error.response?.data || error.message);
-  }
-};
-
-
   const calcularTotal = () =>
     cestoProdutos
       .reduce((acc, produto) => acc + parseFloat(produto.preco) * produto.quantidade, 0)
@@ -107,7 +95,7 @@ const CestoWishlist = () => {
         <>
           {cestoProdutos.map((produto) => (
             <div key={produto.id} className="cesto-item">
-              <img src={produto.imagens.frontImg_url} alt={produto.nome} />
+              <img src={produto.imagens?.frontImg_url || ''} alt={produto.nome} />
               <div className="cesto-item-info">
                 <p>{produto.nome}</p>
                 <p>{produto.preco} €</p>
@@ -143,18 +131,11 @@ const CestoWishlist = () => {
       ) : (
         wishlistProdutos.map((produto) => (
           <div key={produto.id} className="cesto-item">
-            <img src={produto.imagens.frontImg_url} alt={produto.nome} />
+            <img src={produto.imagens?.frontImg_url || ''} alt={produto.nome} />
             <div>
               <p>{produto.nome}</p>
               <p>{produto.preco} €</p>
             </div>
-            <button
-              className="wishlist-remove"
-              onClick={() => handleRemoveFromWishlist(produto.id)}
-              title="Remover da wishlist"
-            >
-              🗑️
-            </button>
           </div>
         ))
       )}
@@ -171,7 +152,7 @@ const CestoWishlist = () => {
   }, []);
 
   return (
-    <>
+    <div>
       <div className="cesto-button" onClick={() => setIsSidebarActive(true)}>
         <div className="cesto-icon-img"></div>
       </div>
@@ -204,7 +185,7 @@ const CestoWishlist = () => {
       </div>
 
       <div className={`overlay ${isSidebarActive ? 'active' : ''}`} onClick={() => setIsSidebarActive(false)}></div>
-    </>
+    </div>
   );
 };
 

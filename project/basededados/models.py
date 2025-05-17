@@ -67,7 +67,15 @@ class Encomenda(models.Model):
     valor = models.DecimalField(max_digits=10, decimal_places=2)
     estado = models.ForeignKey(Estado, on_delete=models.CASCADE)
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
-    produtos = models.ManyToManyField(Produto)
     cartao_numero = models.CharField(max_length=16, null=True, blank=True)
+
+class ProdutoEncomenda(models.Model):
+    encomenda = models.ForeignKey(Encomenda, on_delete=models.CASCADE)
+    produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
+    quantidade = models.PositiveIntegerField()
+    tamanho = models.ForeignKey(Tamanho, on_delete=models.SET_NULL, null=True, blank=True)
+    cor = models.ForeignKey(Cor, on_delete=models.SET_NULL, null=True, blank=True)
+    preco_unitario = models.DecimalField(max_digits=10, decimal_places=2)
+
 
 # Create your models here.

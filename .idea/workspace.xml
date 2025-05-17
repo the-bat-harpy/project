@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0c2465a5-7243-49af-9ad3-fcd721303153" name="Changes" comment="15-5">
+    <list default="true" id="0c2465a5-7243-49af-9ad3-fcd721303153" name="Changes" comment="17-5">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/basededados/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/project/basededados/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/basededados/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/project/basededados/views.py" afterDir="false" />
@@ -12,8 +12,6 @@
       <change beforePath="$PROJECT_DIR$/project/frontend/src/Auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/project/frontend/src/Auth.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/frontend/src/CestoWishlistSB.js" beforeDir="false" afterPath="$PROJECT_DIR$/project/frontend/src/CestoWishlistSB.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/frontend/src/ProfileSB.js" beforeDir="false" afterPath="$PROJECT_DIR$/project/frontend/src/ProfileSB.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/frontend/src/Styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/project/frontend/src/Styles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/project/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/project/project/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/project/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/project/project/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/project/view.py" beforeDir="false" afterPath="$PROJECT_DIR$/project/project/view.py" afterDir="false" />
     </list>
@@ -72,8 +70,8 @@
       <recent name="$PROJECT_DIR$/project/frontend/src/images" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/project/frontend/src" />
       <recent name="$PROJECT_DIR$/project/frontend/src/images" />
+      <recent name="$PROJECT_DIR$/project/frontend/src" />
       <recent name="$PROJECT_DIR$/project/project" />
       <recent name="$PROJECT_DIR$/project/frontend" />
       <recent name="$PROJECT_DIR$/project/frontend/public/images" />
@@ -247,7 +245,15 @@
       <option name="project" value="LOCAL" />
       <updated>1747345540010</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="17-5">
+      <option name="closed" value="true" />
+      <created>1747485250207</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1747485250207</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -275,7 +281,8 @@
     <MESSAGE value="em componentes" />
     <MESSAGE value="para a laura" />
     <MESSAGE value="15-5" />
-    <option name="LAST_COMMIT_MESSAGE" value="15-5" />
+    <MESSAGE value="17-5" />
+    <option name="LAST_COMMIT_MESSAGE" value="17-5" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

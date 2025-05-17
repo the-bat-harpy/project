@@ -25,7 +25,7 @@ urlpatterns = [
     # cesto
     path('api/cesto/', views.produtos_no_cesto),
     path('api/cesto/adicionar/', views.adicionar_ao_cesto, name='adicionar_ao_cesto'),
-    path('cesto/<int:produto_id>/', views.remover_do_cesto, name='remover_do_cesto'),
+    path('cesto/<int:produto_id>/', views.remover_produto_cesto, name='remover-produto-cesto'),
     # wishlist
     path('api/wishlist/', views.wishlist_view),
     path('api/wishlist/add/', views.adicionar_wishlist, name='adicionar_wishlist'),
@@ -35,6 +35,7 @@ urlpatterns = [
     path('api/finalizar-compra/', views.finalizar_compra_view),
     path('api/encomenda/', views.criar_ou_editar_encomenda_view, name='criar_ou_editar_encomenda'),
     path('api/encomendas/<int:encomenda_id>/', views.editar_encomenda_por_id_view, name='editar_encomenda_por_id'),
+    path('api/encomendas/<int:encomenda_id>/alterar_estado/', views.alterar_estado_encomenda,name='alterar_estado_encomenda'),
 
 ]
 

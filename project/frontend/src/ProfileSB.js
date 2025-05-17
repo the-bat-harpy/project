@@ -5,6 +5,7 @@ import { useAuth } from './AuthContext';
 
 function ProfileSidebar() {
   const [isSidebarActive, setIsSidebarActive] = useState(false);
+    const [is_superuser, setIsSuperuser] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
@@ -27,6 +28,8 @@ function ProfileSidebar() {
     if (success) {
       setIsAuthenticated(true);
       setIsSidebarActive(false);
+        const userData = JSON.parse(localStorage.getItem('user_data'));
+          setIsSuperuser(userData?.is_superuser || false);
      // window.location.reload();
     }
   };

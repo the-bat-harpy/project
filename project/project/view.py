@@ -43,11 +43,14 @@ def login_view(request):
 
     if user is not None:
         login(request, user)
-        return Response({'message': 'Logged in successfully'})
+        return Response({
+          'message': 'Logged in successfully',
+          'email': user.email,
+          'username': user.username,
+          'is_superuser': user.is_superuser,
+        })
     else:
         return Response({'error': 'Invalid email or password'}, status=status.HTTP_401_UNAUTHORIZED)
-
-
 @api_view(['GET'])
 def logout_view(request):
     logout(request)
