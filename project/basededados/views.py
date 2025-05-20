@@ -2,16 +2,13 @@ import json
 
 import logging
 
-from django.db import transaction
-from django.http import JsonResponse
-from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404
-from django.views.decorators.http import require_http_methods
 from rest_framework import status
-from rest_framework.decorators import api_view, permission_classes
 from django.views.decorators.csrf import csrf_exempt
-from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
+from django.http import JsonResponse
+from rest_framework.decorators import api_view, permission_classes
 
 from .models import Produto, Cliente, Tamanho, Cor, ProdutoNoCesto, Cesto, Tipo, Encomenda, Imagens, Wishlist, Estado, ProdutoEncomenda
 
@@ -48,7 +45,7 @@ def tipo_produto_descricao(request, tipo_id):
 def produtos_no_cesto(request):
     user = request.user
     if not user.is_authenticated:
-        return JsonResponse({'error': 'Usuário não autenticado'}, status=401)
+        return JsonResponse({'error': 'Utilizador não autenticado'}, status=401)
 
     try:
         cliente = Cliente.objects.get(user=user)
@@ -78,6 +75,7 @@ def produtos_no_cesto(request):
         })
 
     return JsonResponse(produtos_data, safe=False)
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def wishlist_view(request):
@@ -197,7 +195,7 @@ def adicionar_ao_cesto(request):
 @permission_classes([IsAuthenticated])
 def update_profile_view(request):
     if not request.user.is_authenticated:
-        return JsonResponse({'error': 'Usuário não autenticado'}, status=401)
+        return JsonResponse({'error': 'Utilizador não autenticado'}, status=401)
 
     try:
         cliente = Cliente.objects.get(user=request.user)
@@ -239,37 +237,47 @@ def encomendas_view(request):
     user = request.user
 
     if user.is_superuser:
-        encomendas = Encomenda.objects.all().select_related('estado').prefetch_related('produtos__imagens')
+        encomendas = Encomenda.objects.all().select_related('estado').prefetch_related(
+            'produtoencomenda_set__produto__imagens'
+        )
     else:
         try:
             cliente = Cliente.objects.get(user=user)
         except Cliente.DoesNotExist:
             return JsonResponse({'error': 'Cliente não encontrado'}, status=404)
-        encomendas = Encomenda.objects.filter(cliente=cliente).select_related('estado').prefetch_related('produtos__imagens')
+
+        encomendas = Encomenda.objects.filter(cliente=cliente).select_related('estado').prefetch_related(
+            'produtoencomenda_set__produto__imagens'
+        )
 
     data = []
     for encomenda in encomendas:
         produtos = []
-        for produto in encomenda.produtos.all():
+        for item in encomenda.produtoencomenda_set.all():
+            produto = item.produto
             imagem_url = produto.imagens.frontImg_url if produto.imagens else None
-            produtos.append(imagem_url)
+            produtos.append({
+                'id': produto.id,
+                'nome': produto.nome,
+                'preco_unitario': float(item.preco_unitario),
+                'quantidade': item.quantidade,
+                'tamanho': item.tamanho.description if item.tamanho else None,
+                'cor': item.cor.description if item.cor else None,
+                'imagem': imagem_url,
+            })
 
         data.append({
             'id': encomenda.id,
             'estado': encomenda.estado.description,
-            'total': f"{encomenda.valor:.2f}€",
+            'total': float(encomenda.valor),
             'produtos': produtos
         })
-
 
     return JsonResponse({
         'username': user.username,
         'is_superuser': user.is_superuser,
         'encomendas': data
     })
-from django.http import JsonResponse
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -287,17 +295,28 @@ def finalizar_compra_view(request):
     if not cesto.itens.exists():
         return JsonResponse({'error': 'Cesto vazio'}, status=400)
 
-    encomenda = Encomenda.objects.filter(cliente=cliente, status='pendente').first()
+    encomenda = Encomenda.objects.filter(cliente=cliente, estado_id=1).first()
 
     if not encomenda:
-        encomenda = Encomenda.objects.create(cliente=cliente, status='pendente', total=0)
+        encomenda = Encomenda.objects.create(
+            cliente=cliente,
+            estado_id=1,
+            valor=0,
+            morada_entrega="",
+            cartao_numero=None,
+        )
 
-        total = 0.0
+        valor = 0.0
         for item in cesto.itens.all():
             produto = item.produto
             preco = float(produto.price)
             subtotal = preco * item.quantidade
-            total += subtotal
+            valor += subtotal
+
+            produto.stock -= item.quantidade
+            if produto.stock < 0:
+                produto.stock = 0
+            produto.save()
 
             ProdutoEncomenda.objects.create(
                 encomenda=encomenda,
@@ -308,7 +327,7 @@ def finalizar_compra_view(request):
                 preco_unitario=preco
             )
 
-        encomenda.total = total
+        encomenda.valor = valor
         encomenda.save()
 
         cesto.itens.all().delete()
@@ -322,7 +341,7 @@ def finalizar_compra_view(request):
 
     produtos = []
     for pe in encomenda.produtoencomenda_set.all():
-        imagem_url = pe.produto.imagens.frontImg_url if hasattr(pe.produto, 'imagens') else None
+        imagem_url = getattr(pe.produto.imagens, 'frontImg_url', None)
         produtos.append({
             'id': pe.produto.id,
             'nome': pe.produto.nome,
@@ -336,97 +355,68 @@ def finalizar_compra_view(request):
     return JsonResponse({
         'cliente': cliente_data,
         'produtos': produtos,
-        'total': round(encomenda.total, 2),
+        'valor': round(encomenda.valor, 2),
         'encomenda_id': encomenda.id,
     })
-logger = logging.getLogger(__name__)
 
 @api_view(["PUT"])
 @permission_classes([IsAuthenticated])
 def criar_ou_editar_encomenda_view(request):
-    """
-    View para criar ou editar encomenda via PUT.
-    Se for enviado 'encomenda_id' no body, tenta editar.
-    Caso contrário, cria nova encomenda.
-    """
     user = request.user
-    logger.info(f"Usuário {user} iniciou criar_ou_editar_encomenda_view")
 
     try:
         cliente = Cliente.objects.get(user=user)
-        logger.debug(f"Cliente encontrado: {cliente}")
     except Cliente.DoesNotExist:
-        logger.error(f"Cliente para o usuário {user} não encontrado")
         return JsonResponse({'error': 'Cliente não encontrado'}, status=404)
 
     try:
         data = json.loads(request.body)
-        logger.debug(f"Dados recebidos: {data}")
     except json.JSONDecodeError:
-        logger.error("Erro ao decodificar JSON no corpo da requisição")
         return JsonResponse({'error': 'JSON inválido'}, status=400)
 
     encomenda_id = data.get('encomenda_id')
     morada_entrega = data.get('morada_entrega')
     cartao_numero = data.get('cartao_numero')
 
-    logger.info(f"Tentativa de editar encomenda_id={encomenda_id}")
-
     encomenda = None
     if encomenda_id:
         encomenda = Encomenda.objects.filter(id=encomenda_id, cliente=cliente).first()
-        if encomenda:
-            logger.info(f"Encomenda encontrada para edição: ID {encomenda.id}")
-        else:
-            logger.warning(f"Encomenda com ID {encomenda_id} não encontrada para o cliente {cliente}")
 
     if not encomenda:
         encomenda = Encomenda(cliente=cliente)
-        logger.info("Criando nova encomenda")
 
     if morada_entrega is not None:
         encomenda.morada_entrega = morada_entrega
-        logger.debug(f"Morada de entrega atualizada para: {morada_entrega}")
 
     if cartao_numero is not None:
         encomenda.cartao_numero = cartao_numero
-        logger.debug(f"Número do cartão atualizado para: {cartao_numero}")
 
     encomenda.save()
-    logger.info(f"Encomenda salva com ID: {encomenda.id}")
 
     return JsonResponse({
         'success': 'Encomenda criada/atualizada com sucesso',
         'encomenda_id': encomenda.id
     })
 
-
 @api_view(["PUT"])
 @permission_classes([IsAuthenticated])
 def editar_encomenda_por_id_view(request, encomenda_id):
 
     user = request.user
-    logger.info(f"Usuário {user} iniciou editar_encomenda_por_id_view para encomenda_id={encomenda_id}")
 
     try:
         cliente = Cliente.objects.get(user=user)
-        logger.debug(f"Cliente encontrado: {cliente}")
     except Cliente.DoesNotExist:
-        logger.error(f"Cliente para o usuário {user} não encontrado")
         return JsonResponse({'error': 'Cliente não encontrado'}, status=404)
 
     try:
         encomenda = Encomenda.objects.get(id=encomenda_id, cliente=cliente)
-        logger.info(f"Encomenda encontrada: ID {encomenda.id}")
     except Encomenda.DoesNotExist:
-        logger.error(f"Encomenda com ID {encomenda_id} não encontrada para o cliente {cliente}")
         return JsonResponse({'error': 'Encomenda não encontrada'}, status=404)
 
     try:
         data = json.loads(request.body)
-        logger.debug(f"Dados recebidos para atualização: {data}")
     except json.JSONDecodeError:
-        logger.error("Erro ao decodificar JSON no corpo da requisição")
         return JsonResponse({'error': 'JSON inválido'}, status=400)
 
     morada_entrega = data.get('morada_entrega')
@@ -434,14 +424,11 @@ def editar_encomenda_por_id_view(request, encomenda_id):
 
     if morada_entrega is not None:
         encomenda.morada_entrega = morada_entrega
-        logger.debug(f"Morada de entrega atualizada para: {morada_entrega}")
 
     if cartao_numero is not None:
         encomenda.cartao_numero = cartao_numero
-        logger.debug(f"Número do cartão atualizado para: {cartao_numero}")
 
     encomenda.save()
-    logger.info(f"Encomenda atualizada com ID: {encomenda.id}")
 
     return JsonResponse({
         'success': 'Encomenda atualizada com sucesso',
@@ -654,3 +641,85 @@ def alterar_estado_encomenda(request, encomenda_id):
             return JsonResponse({'success': False, 'message': 'Estado já está no máximo'})
     except Estado.DoesNotExist:
         return JsonResponse({'error': 'Estado inválido'}, status=400)
+
+
+@csrf_exempt
+@permission_classes([IsAuthenticated])
+def sincronizar_encomenda(request):
+    user = request.user
+
+    try:
+        cliente = Cliente.objects.get(user=user)
+    except Cliente.DoesNotExist:
+        return JsonResponse({'erro': 'Cliente não encontrado'}, status=404)
+
+    if not cliente.cesto:
+        return JsonResponse({'erro': 'Cesto não encontrado'}, status=404)
+
+    cesto_itens = ProdutoNoCesto.objects.filter(cesto=cliente.cesto)
+
+    if not cesto_itens.exists():
+        return JsonResponse({'erro': 'Cesto vazio'}, status=400)
+
+    estado_default = Estado.objects.first()
+    encomenda, _ = Encomenda.objects.get_or_create(
+        cliente=cliente,
+        estado=estado_default,
+    )
+
+    ProdutoEncomenda.objects.filter(encomenda=encomenda).delete()
+
+    total = 0
+    produtos_response = []
+
+    for item in cesto_itens:
+        produto = item.produto
+
+        if produto.quantidade < item.quantidade:
+            return JsonResponse({
+                'erro': f'Sem stock suficiente para o produto {produto.nome}'
+            }, status=400)
+
+        produto.quantidade -= item.quantidade
+        produto.save()
+
+        ProdutoEncomenda.objects.create(
+            encomenda=encomenda,
+            produto=produto,
+            quantidade=item.quantidade,
+            tamanho=item.tamanho,
+            cor=item.cor,
+            preco_unitario=produto.price
+        )
+
+        subtotal = float(produto.price) * item.quantidade
+        total += subtotal
+
+        produtos_response.append({
+            'id': produto.id,
+            'nome': produto.nome,
+            'preco': float(produto.price),
+            'quantidade': item.quantidade,
+            'tamanho': item.tamanho.description if item.tamanho else None,
+            'cor': item.cor.description if item.cor else None,
+            'imagem': produto.imagens.frontImg_url if produto.imagens else "",
+        })
+
+    encomenda.valor = total
+    encomenda.morada_entrega = cliente.morada or ''
+    encomenda.cartao_numero = cliente.cartao or ''
+    encomenda.save()
+
+    cesto_itens.delete()
+
+    return JsonResponse({
+        'encomenda_id': encomenda.id,
+        'valor': total,
+        'produtos': produtos_response,
+        'cliente': {
+            'nome': cliente.user.first_name,
+            'morada': cliente.morada,
+            'telefone': cliente.num_tel,
+            'cartao': cliente.cartao,
+        }
+    })

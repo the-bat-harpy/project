@@ -41,7 +41,7 @@ const CestoWishlist = () => {
 
   const fetchCestoProdutos = async () => {
     try {
-      console.log("Buscando produtos do cesto...");
+      console.log("A carregar produtos do cesto...");
       const response = await axios.get(`${BASE_URL}/cesto/`, {
         withCredentials: true,
       });
@@ -54,7 +54,7 @@ const CestoWishlist = () => {
 
   const fetchWishlistProdutos = async () => {
     try {
-      console.log("Buscando produtos da wishlist...");
+      console.log("A carregar produtos da wishlist...");
       const response = await axios.get(`${BASE_URL}/wishlist/`, {
         withCredentials: true,
       });
